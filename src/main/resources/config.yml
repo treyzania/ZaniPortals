@@ -1,1 +1,15 @@
-# Nothing here yet!
+# Config for ZaniPortals
+
+PortalStructure:
+    # The blocks that the link signs can be placed on.
+    SignPlaceOnBlocks:
+        - 49
+    
+    # The other blocks in the frame
+    PortalFrameBlocks:
+        - 49
+        - 112
+    
+    # This must be a transparent block or people won't be able to enter it.
+    PortalBlock: 119
+    
