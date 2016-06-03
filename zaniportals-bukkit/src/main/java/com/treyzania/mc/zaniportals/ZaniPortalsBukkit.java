@@ -2,9 +2,11 @@ package com.treyzania.mc.zaniportals;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class ZaniPortals extends JavaPlugin {
+import com.treyzania.mc.zaniportals.adapters.BukkitServerProvider;
 
-	public static ZaniPortals INSTANCE;
+public class ZaniPortalsBukkit extends JavaPlugin {
+
+	public static ZaniPortalsBukkit INSTANCE;
 	
 	public ZaniPortalsConfig conf;
 	
@@ -12,6 +14,7 @@ public class ZaniPortals extends JavaPlugin {
 	public void onEnable() {
 		
 		INSTANCE = this;
+		ZaniPortals.server = new BukkitServerProvider();
 		
 		this.loadConfig();
 		

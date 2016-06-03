@@ -2,7 +2,7 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import java.util.UUID;
 
-public interface PortalPlayer extends PortalCommandSender {
+public interface PortalPlayer extends PortalCommandSender, Wrapper {
 
 	public UUID getUniqueId();
 	public String getName();

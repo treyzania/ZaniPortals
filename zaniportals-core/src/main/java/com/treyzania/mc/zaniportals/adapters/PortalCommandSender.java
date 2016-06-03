@@ -1,6 +1,6 @@
 package com.treyzania.mc.zaniportals.adapters;
 
-public interface PortalCommandSender {
+public interface PortalCommandSender extends Wrapper {
 
 	public void sendMessage(String message);
 	

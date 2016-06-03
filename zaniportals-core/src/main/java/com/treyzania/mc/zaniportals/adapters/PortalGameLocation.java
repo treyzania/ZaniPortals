@@ -1,6 +1,6 @@
 package com.treyzania.mc.zaniportals.adapters;
 
-public interface PortalGameLocation {
+public interface PortalGameLocation extends Wrapper {
 
 	public PortalWorld getWorld();
 	public double getX();
@@ -19,7 +19,6 @@ public interface PortalGameLocation {
 		return (int) this.getZ();
 	}
 	
-	public void setBlock(PortalGameBlock block);
 	public PortalGameBlock getBlock();
 	
 }
