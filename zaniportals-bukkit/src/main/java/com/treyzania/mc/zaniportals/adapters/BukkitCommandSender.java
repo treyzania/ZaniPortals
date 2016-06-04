@@ -1,6 +1,7 @@
 package com.treyzania.mc.zaniportals.adapters;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class BukkitCommandSender implements PortalCommandSender {
 
@@ -29,6 +30,16 @@ public class BukkitCommandSender implements PortalCommandSender {
 	@Override
 	public Object getWrappedObject() {
 		return this.sender;
+	}
+
+	@Override
+	public boolean isPlayer() {
+		return this.sender instanceof Player;
+	}
+
+	@Override
+	public PortalPlayer getAsPlayer() {
+		return new BukkitPortalPlayer((Player) this.sender);
 	}
 	
 }

@@ -44,4 +44,9 @@ public class BukkitEntity implements PortalEntity {
 		return this.entity instanceof Player;
 	}
 
+	@Override
+	public PortalPlayer getAsPlayer() {
+		return new BukkitPortalPlayer((Player) this.entity);
+	}
+
 }
