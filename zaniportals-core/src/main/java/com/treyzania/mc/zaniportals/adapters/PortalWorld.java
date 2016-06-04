@@ -13,12 +13,16 @@ public interface PortalWorld extends Wrapper {
 	
 	public PortalLocation createLocation(double x, double y, double z);
 	
+	public default PortalLocation createLocation(Point3i point) {
+		return this.createLocation(point.x, point.y, point.z);
+	}
+	
 	public default PortalBlock[] getBlocks(Point3i[] locations) {
 		
 		List<PortalBlock> blocks = new ArrayList<>();
 		
 		for (Point3i loc : locations) {
-			blocks.add(this.createLocation(loc.x, loc.y, loc.z).getBlock());
+			blocks.add(this.createLocation(loc).getBlock());
 		}
 		
 		return blocks.toArray(new PortalBlock[blocks.size()]);
