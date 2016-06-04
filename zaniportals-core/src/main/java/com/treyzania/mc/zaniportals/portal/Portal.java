@@ -56,5 +56,10 @@ public class Portal {
 	public void enter(PortalEntity ent) {
 		this.target.teleport(ent);
 	}
+
+	@Override
+	public int hashCode() {
+		return this.name.hashCode();
+	}
 	
 }
