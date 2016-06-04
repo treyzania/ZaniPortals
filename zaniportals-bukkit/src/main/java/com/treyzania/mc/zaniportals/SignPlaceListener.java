@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
 import com.treyzania.mc.zaniportals.adapters.BukkitBlock;
-import com.treyzania.mc.zaniportals.adapters.PortalGameBlock;
+import com.treyzania.mc.zaniportals.adapters.PortalBlock;
 import com.treyzania.mc.zaniportals.portal.PortalHelper;
 
 public class SignPlaceListener implements Listener {
@@ -13,7 +13,7 @@ public class SignPlaceListener implements Listener {
 	@EventHandler
 	public void onSignChange(SignChangeEvent event) {
 		
-		PortalGameBlock block = new BukkitBlock(event.getBlock());
+		PortalBlock block = new BukkitBlock(event.getBlock());
 		
 		// Validation.
 		if (!PortalHelper.isValidNewSignSyntax(block.getSignData())) return; // Do nothing.

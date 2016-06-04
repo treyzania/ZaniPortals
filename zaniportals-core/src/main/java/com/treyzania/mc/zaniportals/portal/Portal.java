@@ -1,7 +1,7 @@
 package com.treyzania.mc.zaniportals.portal;
 
 import com.treyzania.mc.zaniportals.Point3i;
-import com.treyzania.mc.zaniportals.adapters.PortalGameLocation;
+import com.treyzania.mc.zaniportals.adapters.PortalLocation;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 
 public class Portal {
@@ -24,7 +24,7 @@ public class Portal {
 		this(world, target, new Point3i[0], new Point3i[0]);
 	}
 	
-	public boolean isInPortal(PortalGameLocation loc) {
+	public boolean isInPortal(PortalLocation loc) {
 		
 		if (!loc.getWorld().getName().equals(this.world.getName())) return false;
 		

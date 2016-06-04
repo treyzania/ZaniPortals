@@ -2,7 +2,7 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import org.bukkit.block.Block;
 
-public class BukkitBlock implements PortalGameBlock {
+public class BukkitBlock implements PortalBlock {
 
 	private final Block block;
 	

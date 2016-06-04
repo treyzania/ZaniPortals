@@ -11,17 +11,17 @@ public interface PortalWorld extends Wrapper {
 	public String getName();
 	public File getFile();
 	
-	public PortalGameLocation createLocation(double x, double y, double z);
+	public PortalLocation createLocation(double x, double y, double z);
 	
-	public default PortalGameBlock[] getBlocks(Point3i[] locations) {
+	public default PortalBlock[] getBlocks(Point3i[] locations) {
 		
-		List<PortalGameBlock> blocks = new ArrayList<>();
+		List<PortalBlock> blocks = new ArrayList<>();
 		
 		for (Point3i loc : locations) {
 			blocks.add(this.createLocation(loc.x, loc.y, loc.z).getBlock());
 		}
 		
-		return blocks.toArray(new PortalGameBlock[blocks.size()]);
+		return blocks.toArray(new PortalBlock[blocks.size()]);
 		
 	}
 	

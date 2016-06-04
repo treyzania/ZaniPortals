@@ -7,8 +7,8 @@ public interface PortalEntity extends PossiblyPlayer, Wrapper {
 	public UUID getUniqueId();
 	public String getName();
 	
-	public void setLocation(PortalGameLocation loc);
-	public PortalGameLocation getLocation();
+	public void setLocation(PortalLocation loc);
+	public PortalLocation getLocation();
 	
 	public boolean isPlayer();
 	

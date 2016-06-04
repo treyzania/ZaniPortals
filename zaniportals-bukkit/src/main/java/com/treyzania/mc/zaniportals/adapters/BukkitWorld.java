@@ -29,7 +29,7 @@ public class BukkitWorld implements PortalWorld {
 	}
 
 	@Override
-	public PortalGameLocation createLocation(double x, double y, double z) {
+	public PortalLocation createLocation(double x, double y, double z) {
 		return new BukkitLocation(new Location(this.world, x, y, z));
 	}
 	

@@ -1,6 +1,6 @@
 package com.treyzania.mc.zaniportals.adapters;
 
-public interface PortalGameBlock extends Wrapper {
+public interface PortalBlock extends Wrapper {
 
 	public void setId(int id);
 	public int getId();

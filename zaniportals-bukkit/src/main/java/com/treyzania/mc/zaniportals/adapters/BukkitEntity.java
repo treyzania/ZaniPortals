@@ -25,12 +25,12 @@ public class BukkitEntity implements PortalEntity {
 	}
 	
 	@Override
-	public void setLocation(PortalGameLocation loc) {
+	public void setLocation(PortalLocation loc) {
 		this.entity.teleport((Location) loc.getWrappedObject());
 	}
 
 	@Override
-	public PortalGameLocation getLocation() {
+	public PortalLocation getLocation() {
 		return new BukkitLocation(this.entity.getLocation());
 	}
 

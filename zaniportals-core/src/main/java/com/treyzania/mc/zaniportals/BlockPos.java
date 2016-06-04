@@ -1,6 +1,6 @@
 package com.treyzania.mc.zaniportals;
 
-import com.treyzania.mc.zaniportals.adapters.PortalGameLocation;
+import com.treyzania.mc.zaniportals.adapters.PortalLocation;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 
 public class BlockPos {
@@ -31,7 +31,7 @@ public class BlockPos {
 		return this.point.z;
 	}
 	
-	public PortalGameLocation getAsLocation() {
+	public PortalLocation getAsLocation() {
 		return this.world.createLocation(this.getX(), this.getY(), this.getZ());
 	}
 	

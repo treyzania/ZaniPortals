@@ -2,7 +2,7 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import org.bukkit.Location;
 
-public class BukkitLocation implements PortalGameLocation {
+public class BukkitLocation implements PortalLocation {
 
 	private final Location location;
 	
@@ -31,7 +31,7 @@ public class BukkitLocation implements PortalGameLocation {
 	}
 
 	@Override
-	public PortalGameBlock getBlock() {
+	public PortalBlock getBlock() {
 		return new BukkitBlock(this.location.getBlock());
 	}
 
