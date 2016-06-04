@@ -21,4 +21,8 @@ public interface PortalGameLocation extends Wrapper {
 	
 	public PortalGameBlock getBlock();
 	
+	public default PortalGameLocation getLocationAtOffset(double x, double y, double z) {
+		return this.getWorld().createLocation(this.getX() + x, this.getY() + y, this.getZ() + z);
+	}
+	
 }

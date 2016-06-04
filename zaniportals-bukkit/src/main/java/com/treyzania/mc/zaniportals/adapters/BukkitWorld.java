@@ -2,6 +2,7 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import java.io.File;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 
 public class BukkitWorld implements PortalWorld {
@@ -25,6 +26,11 @@ public class BukkitWorld implements PortalWorld {
 	@Override
 	public Object getWrappedObject() {
 		return this.world;
+	}
+
+	@Override
+	public PortalGameLocation createLocation(double x, double y, double z) {
+		return new BukkitLocation(new Location(this.world, x, y, z));
 	}
 	
 }

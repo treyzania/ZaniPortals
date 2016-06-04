@@ -12,7 +12,7 @@ public class BukkitLocation implements PortalGameLocation {
 	
 	@Override
 	public PortalWorld getWorld() {
-		return null;
+		return new BukkitWorld(this.location.getWorld());
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.treyzania.mc.zaniportals.cmd;
 
 import com.treyzania.mc.zaniportals.adapters.PortalCommandSender;
+import com.treyzania.mc.zaniportals.adapters.PortalPlayer;
 
 public class CommandListPortals extends StandardPortalCommand {
 	
