@@ -16,4 +16,6 @@ public interface ServerProvider {
 		this.scheduleAsync(r, 0);
 	}
 	
+	public PortalWorld getWorld(String name);
+	
 }

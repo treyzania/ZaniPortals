@@ -27,4 +27,9 @@ public class BukkitServerProvider implements ServerProvider {
 		Bukkit.getScheduler().scheduleSyncDelayedTask(ZaniPortalsBukkit.INSTANCE, r, tickDelay);
 	}
 
+	@Override
+	public PortalWorld getWorld(String name) {
+		return new BukkitWorld(Bukkit.getWorld(name));
+	}
+
 }
