@@ -3,8 +3,7 @@ package com.treyzania.mc.zaniportals.adapters;
 import java.util.Arrays;
 import java.util.List;
 
-import com.treyzania.mc.zaniportals.GsonManagement;
-import com.treyzania.mc.zaniportals.gson.PortalTargetAdapter;
+import com.treyzania.mc.zaniportals.portal.PortalHelper;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
 
 public interface PortalLinkItem extends PortalItem {
@@ -13,8 +12,8 @@ public interface PortalLinkItem extends PortalItem {
 	
 	public default void setTarget(PortalTarget target) {
 		
-		String data = GsonManagement.getGson().toJson(target);
-		String pretty = PortalTargetAdapter.makeSerializationPretty(data);
+		String data = PortalHelper.serializePortalTarget(target);
+		String pretty = PortalHelper.makeTargetSerializationPretty(data);
 		
 		this.setLore(Arrays.asList(PORTAL_LINK_IDENTIFIER, pretty));
 		
@@ -27,12 +26,10 @@ public interface PortalLinkItem extends PortalItem {
 		// Validate
 		if (!lore.get(0).equals(PORTAL_LINK_IDENTIFIER)) throw new NullPointerException("Invalid portal link item!"); 
 		
-		String pretty = lore.get(1);
-		String data = PortalTargetAdapter.makeSerializationConforming(pretty);
+		String data = PortalHelper.makeTargetSerializationConforming(lore.get(1));
 		
 		// Actually deserialize
-		PortalTarget target = GsonManagement.getGson().fromJson(data, PortalTarget.class);
-		return target;
+		return PortalHelper.deserializePortalTarget(data);
 		
 	}
 	
