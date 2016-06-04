@@ -12,6 +12,7 @@ public class BukkitCommandSender implements PortalCommandSender {
 
 	@Override
 	public void sendMessage(String message) {
+		Thread.dumpStack();
 		this.sender.sendMessage(message);
 	}
 

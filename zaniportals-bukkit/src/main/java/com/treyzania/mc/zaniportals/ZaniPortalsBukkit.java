@@ -2,7 +2,10 @@ package com.treyzania.mc.zaniportals;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.treyzania.mc.zaniportals.adapters.BukkitCommandAdapter;
 import com.treyzania.mc.zaniportals.adapters.BukkitServerProvider;
+import com.treyzania.mc.zaniportals.cmd.AbstractPortalCommand;
+import com.treyzania.mc.zaniportals.cmd.CommandListPortals;
 
 public class ZaniPortalsBukkit extends JavaPlugin {
 
@@ -18,6 +21,8 @@ public class ZaniPortalsBukkit extends JavaPlugin {
 		
 		this.loadConfig();
 		
+		this.registerCommand(new CommandListPortals("listportals"));
+		
 	}
 	
 	@Override
@@ -32,6 +37,10 @@ public class ZaniPortalsBukkit extends JavaPlugin {
 		this.saveDefaultConfig();
 		this.conf = new ZaniPortalsConfig(this.getConfig());
 		
+	}
+	
+	private void registerCommand(AbstractPortalCommand command) {
+		this.getCommand(command.getName()).setExecutor(new BukkitCommandAdapter(command));
 	}
 	
 }

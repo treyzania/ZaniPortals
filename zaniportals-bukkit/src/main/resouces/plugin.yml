@@ -1,4 +1,9 @@
 name: ZaniPortals
-main: com.treyzania.mc.ZaniPortalsBukkit
+main: com.treyzania.mc.zaniportals.ZaniPortalsBukkit
 author: treyzania
 version: '0.0.1'
+commands:
+    listportals:
+        aliases: [portals]
+        description: Lists all the portals on the server.
+        usage: /portals
