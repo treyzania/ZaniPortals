@@ -8,6 +8,10 @@ public interface PortalTarget {
 	public String getName();
 	public PortalLocation getDestination();
 	
+	public default String getExpression() {
+		return this.getName();
+	}
+	
 	public default void teleport(PortalEntity ent) {
 		ent.setLocation(this.getDestination());
 	}

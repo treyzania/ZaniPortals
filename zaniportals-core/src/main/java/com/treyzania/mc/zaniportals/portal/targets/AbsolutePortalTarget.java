@@ -14,10 +14,15 @@ public class AbsolutePortalTarget implements PortalTarget {
 	public String getName() {
 		return String.format("(%s,%s,%s)", this.destination.getBlockX(), this.destination.getBlockY(), this.destination.getBlockZ());
 	}
-
+	
 	@Override
 	public PortalLocation getDestination() {
 		return this.destination;
 	}
 
+	@Override
+	public String getExpression() {
+		return String.format("%s,%s,%s,%s", this.destination.getWorld(), this.destination.getX(), this.destination.getBlockY(), this.destination.getZ());
+	}
+	
 }
