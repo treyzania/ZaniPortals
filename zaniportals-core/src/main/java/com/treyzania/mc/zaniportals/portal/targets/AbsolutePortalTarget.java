@@ -12,7 +12,7 @@ public class AbsolutePortalTarget implements PortalTarget {
 	
 	@Override
 	public String getName() {
-		return String.format("loc:%s,%s,%s", this.destination.getBlockX(), this.destination.getBlockY(), this.destination.getBlockZ());
+		return String.format("(%s,%s,%s)", this.destination.getBlockX(), this.destination.getBlockY(), this.destination.getBlockZ());
 	}
 
 	@Override
