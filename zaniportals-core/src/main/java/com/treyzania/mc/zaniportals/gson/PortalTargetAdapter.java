@@ -1,4 +1,4 @@
-package com.treyzania.mc.zaniportals.cmd;
+package com.treyzania.mc.zaniportals.gson;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -9,7 +9,6 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.treyzania.mc.zaniportals.ZaniPortals;
-import com.treyzania.mc.zaniportals.gson.Adapter;
 import com.treyzania.mc.zaniportals.portal.targets.AbsolutePortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NamedPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NotifyInvalidPortalTarget;
@@ -51,6 +50,24 @@ public class PortalTargetAdapter extends Adapter<PortalTarget> {
 		}
 		
 		return null;
+		
+	}
+	
+	public static String makeSerializationPretty(String data) {
+		
+		char initial = data.charAt(0);
+		String rest = data.substring(1);
+		
+		return Character.toString(initial).toUpperCase() + rest.replaceFirst(":", ": ");
+		
+	}
+	
+	public static String makeSerializationConforming(String pretty) {
+		
+		char initial = pretty.charAt(0);
+		String rest = pretty.substring(1);
+		
+		return Character.toString(initial).toLowerCase() + rest.replaceFirst(": ", ":");
 		
 	}
 	
