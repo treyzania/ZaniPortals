@@ -10,6 +10,11 @@ public class BukkitBlock implements PortalBlock {
 		this.block = block;
 	}
 	
+	@Override
+	public PortalLocation getLocation() {
+		return new BukkitLocation(this.block.getLocation());
+	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void setId(int id) {
@@ -42,5 +47,5 @@ public class BukkitBlock implements PortalBlock {
 	public Object getWrappedObject() {
 		return this.block;
 	}
-
+	
 }

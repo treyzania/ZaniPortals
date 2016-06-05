@@ -23,7 +23,7 @@ public class PortalHelper {
 	}
 	
 	public static String serializePortalTarget(PortalTarget target) {
-		return String.format("%s:%s", portalTargetClasses.get(target.getClass()), target.getName());
+		return String.format("%s:%s", portalTargetClasses.get(target.getClass()), target.getExpression());
 	}
 	
 	public static PortalTarget deserializePortalTarget(String data) {
@@ -35,7 +35,8 @@ public class PortalHelper {
 		
 		if (clazz == AbsolutePortalTarget.class) {
 			
-			String[] locParts = parts[1].substring(1, parts[1].length() - 1).split(","); // (x,y,z) -> x,y,z -> `[x, y, z]`
+			String[] locParts = parts[1].split(","); // (x,y,z) -> x,y,z -> `[x, y, z]`
+			
 			String worldName = locParts[0];
 			int x = Integer.parseInt(locParts[1]);
 			int y = Integer.parseInt(locParts[2]);

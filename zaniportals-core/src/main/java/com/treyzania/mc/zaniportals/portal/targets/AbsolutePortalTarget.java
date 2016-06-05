@@ -22,7 +22,7 @@ public class AbsolutePortalTarget implements PortalTarget {
 
 	@Override
 	public String getExpression() {
-		return String.format("%s,%s,%s,%s", this.destination.getWorld(), this.destination.getX(), this.destination.getBlockY(), this.destination.getZ());
+		return String.format("%s,%s,%s,%s", this.destination.getWorld().getName(), this.destination.getBlockX(), this.destination.getBlockY(), this.destination.getBlockZ());
 	}
 	
 }

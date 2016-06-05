@@ -27,6 +27,7 @@ public interface PortalItem {
 	
 	public default void makePortalyItem() {
 		
+		if (this.isPortaly()) return;
 		if (!this.canBePortaly()) throw new NullPointerException("Wrong type of item!");
 		
 		this.setName(PORTAL_PEARL_NAME);

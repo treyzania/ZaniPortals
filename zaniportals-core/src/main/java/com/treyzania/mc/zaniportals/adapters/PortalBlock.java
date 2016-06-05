@@ -2,6 +2,11 @@ package com.treyzania.mc.zaniportals.adapters;
 
 public interface PortalBlock extends Wrapper {
 
+	public PortalLocation getLocation();
+	public default PortalWorld getWorld() {
+		return this.getLocation().getWorld();
+	}
+	
 	public void setId(int id);
 	public int getId();
 	
