@@ -42,7 +42,7 @@ public interface PortalItem {
 	public default boolean isPortaly() {
 		
 		if (!this.canBePortaly()) return false;
-		if (!this.isGlowing()) return false;
+		//if (!this.isGlowing()) return false;
 		if (!this.getName().equals(PORTAL_PEARL_NAME)) return false; 
 		
 		return true;

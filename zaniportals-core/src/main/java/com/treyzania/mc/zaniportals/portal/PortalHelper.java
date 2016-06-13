@@ -73,6 +73,8 @@ public class PortalHelper {
 
 	public static String makeTargetSerializationConforming(String pretty) {
 		
+		if (pretty == null || pretty.length() == 0) throw new IllegalArgumentException("Invalid pretty string!");
+		
 		char initial = pretty.charAt(0);
 		String rest = pretty.substring(1);
 		

@@ -13,7 +13,7 @@ public interface PortalTarget {
 	}
 	
 	public default void teleport(PortalEntity ent) {
-		ent.setLocation(this.getDestination());
+		ent.setLocation(this.getDestination().getLocationAtOffset(0.5, 0, 0.5));
 	}
 	
 }

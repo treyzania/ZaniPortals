@@ -4,7 +4,7 @@ import org.bukkit.block.Block;
 
 public class BukkitBlock implements PortalBlock {
 
-	private final Block block;
+	protected final Block block;
 	
 	public BukkitBlock(Block block) {
 		this.block = block;
@@ -40,7 +40,7 @@ public class BukkitBlock implements PortalBlock {
 
 	@Override
 	public PortalSign getSignData() {
-		return null;
+		return new BukkitSign(this.block);
 	}
 
 	@Override

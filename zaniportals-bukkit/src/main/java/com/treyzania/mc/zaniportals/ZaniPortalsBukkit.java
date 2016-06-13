@@ -1,5 +1,6 @@
 package com.treyzania.mc.zaniportals;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.treyzania.mc.zaniportals.adapters.BukkitCommandAdapter;
@@ -20,6 +21,8 @@ public class ZaniPortalsBukkit extends JavaPlugin {
 		ZaniPortals.server = new BukkitServerProvider();
 		
 		this.loadConfig();
+		
+		Bukkit.getPluginManager().registerEvents(new BukkitPortalEventAdapter(), this);
 		
 		this.registerCommand(new CommandListPortals("listportals"));
 		
