@@ -2,7 +2,7 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import java.util.List;
 
-public interface PortalItem {
+public interface PortalItem extends Wrapper {
 
 	public static int ENDER_PEARL_ID = 368;
 	public static String PORTAL_PEARL_NAME = "Portal Pearl";

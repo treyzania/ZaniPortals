@@ -1,6 +1,7 @@
 package com.treyzania.mc.zaniportals.adapters;
 
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
 
 import com.treyzania.mc.zaniportals.ZaniPortalsBukkit;
 
@@ -30,6 +31,12 @@ public class BukkitServerProvider implements ServerProvider {
 	@Override
 	public PortalWorld getWorld(String name) {
 		return new BukkitWorld(Bukkit.getWorld(name));
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	public PortalItem getItem(int id) {
+		return new BukkitItem(new ItemStack(id));
 	}
 
 }

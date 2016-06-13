@@ -18,4 +18,6 @@ public interface ServerProvider {
 	
 	public PortalWorld getWorld(String name);
 	
+	public PortalItem getItem(int id);
+	
 }

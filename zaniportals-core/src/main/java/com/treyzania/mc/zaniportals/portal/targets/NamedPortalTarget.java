@@ -25,7 +25,7 @@ public class NamedPortalTarget implements PortalTarget {
 	public PortalLocation getDestination() {
 		
 		Portal p = ZaniPortals.portals.getPortal(this.name);
-		return p.world.createLocation(p.getPortalLocations()[0]); // FIXME This is totally incorrect behavior.
+		return p.getSignBlock(); // FIXME This is totally incorrect behavior.
 		
 	}
 

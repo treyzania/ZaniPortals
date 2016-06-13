@@ -1,5 +1,7 @@
 package com.treyzania.mc.zaniportals.portal;
 
+import java.util.UUID;
+
 import com.treyzania.mc.zaniportals.Point3i;
 import com.treyzania.mc.zaniportals.adapters.PortalEntity;
 import com.treyzania.mc.zaniportals.adapters.PortalLocation;
@@ -10,14 +12,17 @@ public class Portal {
 
 	public final PortalWorld world;
 	public final String name;
+	public final UUID owner;
 	private PortalTarget target;
 	
+	private Point3i signBlock;
 	private Point3i[] frameBlocks;
 	private Point3i[] portalBlocks; 
 	
-	public Portal(PortalWorld world, String name, Point3i[] frame, Point3i[] portal) {
+	public Portal(PortalWorld world, UUID owner, String name, Point3i[] frame, Point3i[] portal) {
 		
 		this.world = world;
+		this.owner = owner;
 		this.name = name;
 		
 		this.frameBlocks = frame;
@@ -25,8 +30,8 @@ public class Portal {
 		
 	}
 	
-	public Portal(PortalWorld world, String name) {
-		this(world, name, new Point3i[0], new Point3i[0]);
+	public Portal(PortalWorld world, UUID owner, String name) {
+		this(world, owner, name, new Point3i[0], new Point3i[0]);
 	}
 	
 	public boolean isInPortal(PortalLocation loc) {
@@ -39,6 +44,14 @@ public class Portal {
 		
 		return false;
 		
+	}
+	
+	public void setSignBlock(Point3i p3i) {
+		this.signBlock = p3i;
+	}
+	
+	public PortalLocation getSignBlock() {
+		return this.world.createLocation(this.signBlock);
 	}
 	
 	public Point3i[] getFrameLocations() {

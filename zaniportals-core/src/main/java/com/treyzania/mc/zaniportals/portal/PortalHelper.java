@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.adapters.PortalBlock;
-import com.treyzania.mc.zaniportals.adapters.PortalSign;
 import com.treyzania.mc.zaniportals.portal.targets.AbsolutePortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NamedPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NotifyInvalidPortalTarget;
@@ -15,11 +14,15 @@ public class PortalHelper {
 	private static HashMap<Class<? extends PortalTarget>, String> portalTargetClasses = new HashMap<>();
 	
 	public static boolean isValidSignBlock(PortalBlock b) {
-		return false; // TODO Create this algorithm.
+		return true; // TODO Create this algorithm.
 	}
 	
-	public static boolean isValidNewSignSyntax(PortalSign sign) {
-		return false; // TODO Create this algorithm.
+	public static boolean isValidNewSignSyntax(String[] lines) {
+		
+		if (!lines[0].equals("[Portal]")) return false;
+		
+		return true;
+		
 	}
 	
 	public static String serializePortalTarget(PortalTarget target) {

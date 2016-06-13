@@ -6,6 +6,6 @@ import com.treyzania.mc.zaniportals.portal.PortalManager;
 public class ZaniPortals {
 
 	public static ServerProvider server;
-	public static PortalManager portals;
+	public static PortalManager portals = new PortalManager();
 	
 }

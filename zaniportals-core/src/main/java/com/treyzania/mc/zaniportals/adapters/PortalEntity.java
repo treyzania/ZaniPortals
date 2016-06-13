@@ -10,6 +10,10 @@ public interface PortalEntity extends PossiblyPlayer, Wrapper {
 	public void setLocation(PortalLocation loc);
 	public PortalLocation getLocation();
 	
+	public default PortalWorld getWorld() {
+		return this.getLocation().getWorld();
+	}
+	
 	public boolean isPlayer();
 	
 }

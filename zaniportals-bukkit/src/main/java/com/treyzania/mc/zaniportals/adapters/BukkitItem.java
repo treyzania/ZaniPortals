@@ -115,5 +115,10 @@ public class BukkitItem implements PortalItem {
 		return new BukkitLinkItem(this.item);
 		
 	}
+
+	@Override
+	public Object getWrappedObject() {
+		return this.item;
+	}
 	
 }

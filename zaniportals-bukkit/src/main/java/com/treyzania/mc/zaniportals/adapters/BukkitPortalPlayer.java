@@ -1,6 +1,7 @@
 package com.treyzania.mc.zaniportals.adapters;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class BukkitPortalPlayer extends BukkitEntity implements PortalPlayer, PortalCommandSender {
 	
@@ -32,6 +33,11 @@ public class BukkitPortalPlayer extends BukkitEntity implements PortalPlayer, Po
 	@Override
 	public boolean hasPermission(String permission) {
 		return this.player.hasPermission(permission);
+	}
+
+	@Override
+	public void addItem(PortalItem item) {
+		this.player.getInventory().addItem((ItemStack) item.getWrappedObject());
 	}
 	
 }
