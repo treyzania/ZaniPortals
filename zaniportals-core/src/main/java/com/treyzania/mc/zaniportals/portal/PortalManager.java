@@ -15,6 +15,7 @@ import com.google.gson.JsonParser;
 import com.treyzania.mc.zaniportals.GsonManagement;
 import com.treyzania.mc.zaniportals.Point3i;
 import com.treyzania.mc.zaniportals.adapters.PortalBlock;
+import com.treyzania.mc.zaniportals.adapters.PortalEntity;
 import com.treyzania.mc.zaniportals.adapters.PortalLocation;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 
@@ -67,23 +68,23 @@ public class PortalManager {
 		
 	}
 	
-	public Portal findPortal(PortalLocation loc) {
+	/*
+	 * UGHH TERRIBLE SIGNATURE.
+	 */
+	public Portal findPortal(PortalLocation loc, boolean volume, boolean frame) {
 		
 		PortalWorld w = loc.getWorld();
 		Point3i point = loc.getAsPoint3i();
 		
 		for (Portal p : this.portals) {
 			
-			if (!p.world.equals(w)) continue;
+			if (!p.world.isSame(w)) continue;
 			
-			Point3i[] pBlocks = p.getPortalLocations();
-			Point3i[] fBlocks = p.getFrameLocations();
-			
-			for (Point3i pp : pBlocks) {
+			if (volume) for (Point3i pp : p.getPortalLocations()) {
 				if (pp.equals(point)) return p;
 			}
 			
-			for (Point3i fp : fBlocks) {
+			if (frame) for (Point3i fp : p.getFrameLocations()) {
 				if (fp.equals(point)) return p;
 			}
 			
@@ -95,7 +96,11 @@ public class PortalManager {
 	}
 	
 	public Portal findPortal(PortalBlock block) {
-		return this.findPortal(block.getLocation());
+		return this.findPortal(block.getLocation(), true, true);
+	}
+	
+	public Portal findPortalAtEntity(PortalEntity ent) {
+		return this.findPortal(ent.getLocation(), true, false);
 	}
 	
 	public void save(File f) {

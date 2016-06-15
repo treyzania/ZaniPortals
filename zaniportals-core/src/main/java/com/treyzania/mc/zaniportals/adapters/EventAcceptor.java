@@ -121,9 +121,7 @@ public class EventAcceptor {
 	
 	public boolean onMove(PortalEntity ent) {
 		
-		PortalBlock b = ent.getLocation().getBlock();
-		Portal portal = ZaniPortals.portals.findPortal(b);
-		
+		Portal portal = ZaniPortals.portals.findPortalAtEntity(ent);
 		if (portal != null) portal.enter(ent);
 		
 		return false;

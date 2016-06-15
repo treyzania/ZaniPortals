@@ -33,4 +33,8 @@ public interface PortalWorld extends Wrapper {
 		return this.createLocation(point).getBlock();
 	}
 	
+	public default boolean isSame(PortalWorld other) {
+		return this.getName().equals(other.getName());
+	}
+	
 }
