@@ -112,6 +112,7 @@ public class EventAcceptor {
 			
 			ZaniPortals.portals.removePortal(portal);
 			ZaniPortals.savePortals();
+			player.sendMessage("Destroyed portal: " + portal.name);
 			
 		} else {
 			return true; // Cancel the event.
