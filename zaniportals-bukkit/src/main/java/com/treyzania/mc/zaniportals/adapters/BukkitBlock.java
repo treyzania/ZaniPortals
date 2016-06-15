@@ -55,26 +55,32 @@ public class BukkitBlock implements PortalBlock {
 			
 			case NORTH: {
 				b = this.block.getRelative(BlockFace.NORTH);
+				break;
 			}
 			
 			case SOUTH: {
 				b = this.block.getRelative(BlockFace.SOUTH);
+				break;
 			}
 			
 			case EAST: {
 				b = this.block.getRelative(BlockFace.EAST);
+				break;
 			}
 			
 			case WEST: {
 				b = this.block.getRelative(BlockFace.WEST);
+				break;
 			}
 			
 			case UP: {
 				b = this.block.getRelative(BlockFace.UP);
+				break;
 			}
 			
 			case DOWN: {
 				b = this.block.getRelative(BlockFace.DOWN);
+				break;
 			}
 			
 		}

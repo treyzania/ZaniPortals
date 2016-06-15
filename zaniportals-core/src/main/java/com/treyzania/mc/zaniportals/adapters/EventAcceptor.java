@@ -1,5 +1,6 @@
 package com.treyzania.mc.zaniportals.adapters;
 
+import com.treyzania.mc.zaniportals.Perms;
 import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.portal.Portal;
 import com.treyzania.mc.zaniportals.portal.PortalHelper;
@@ -13,7 +14,7 @@ public class EventAcceptor {
 		// Validation.
 		if (!PortalHelper.isValidNewSignSyntax(lines)) return false; // Do nothing.
 		if (!PortalHelper.isValidSignBlock(sign)) return false; // Do nothing.
-		if (!(player.hasPermission("zaniportals.portal.create") || player.isOp())) {
+		if (!(player.hasPermission(Perms.CREATE_PORTAL) || player.isOp())) {
 			
 			player.sendMessage("You don't have permission to do that!");
 			return false;
@@ -34,8 +35,18 @@ public class EventAcceptor {
 		portal.setSignBlock(sign.getLocation().getAsPoint3i());
 		
 		boolean success = ZaniPortals.portals.tryAddPortal(portal);
-		if (success) ZaniPortals.savePortals();
-		player.sendMessage(success ? "Created portal: " + portal.name : "Failed to create portal!");
+		if (success) {
+			
+			ZaniPortals.getFrameCalculator().populate(portal);
+			ZaniPortals.savePortals();
+			
+		}
+		
+		player.sendMessage(
+			success
+			? "Created portal " + portal.name + " with " + portal.getFrameLocations().length + " frame blocks and " + portal.getPortalLocations().length + " portal blocks."
+			: "Failed to create portal!"
+		);
 		
 		return false;
 		
@@ -86,15 +97,34 @@ public class EventAcceptor {
 		
 		if (!block.isSign()) return false;
 		
-		PortalSign sign = block.getSignData();
+		Portal portal = ZaniPortals.portals.findPortal(block);
+		if (portal == null) return false; // Null check.
 		
-		if (!sign.isPortaly()) return false;
-		Portal portal = sign.getPortal();
+		// Clearer this way, even though it's much more space.
+		boolean check = false;
+		check |= (portal.owner.equals(player.getUniqueId()) && player.hasPermission(Perms.DESTROY_PORTAL));
+		check |= player.hasPermission(Perms.DESTROY_ANY_PORTAL);
+		check |= player.isOp();
 		
-		// Just remove the portal for now.
-		// TODO Permissions
-		ZaniPortals.portals.removePortal(portal);
-		ZaniPortals.savePortals();
+		if (check) {
+			
+			ZaniPortals.portals.removePortal(portal);
+			ZaniPortals.savePortals();
+			
+		} else {
+			return true; // Cancel the event.
+		}
+		
+		return false;
+		
+	}
+	
+	public boolean onMove(PortalEntity ent) {
+		
+		PortalBlock b = ent.getLocation().getBlock();
+		Portal portal = ZaniPortals.portals.findPortal(b);
+		
+		if (portal != null) portal.enter(ent);
 		
 		return false;
 		

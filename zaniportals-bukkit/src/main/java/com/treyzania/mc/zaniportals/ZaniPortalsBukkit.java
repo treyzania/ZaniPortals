@@ -22,19 +22,20 @@ public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 	public void onEnable() {
 		
 		INSTANCE = this;
-		ZaniPortals.plugin = this;
+		
+		// Set up the abstractination stuff.
 		ZaniPortals.server = new BukkitServerProvider();
-		
+		ZaniPortals.plugin = this;
 		this.loadConfig();
-		
-		// Basic Bukkit stuff.
-		Bukkit.getPluginManager().registerEvents(new BukkitPortalEventAdapter(), this);
-		this.registerCommand(new CommandListPortals("listportals"));
 		
 		// Set up the portal manager.
 		PortalManager man = new PortalManager();
 		man.load(this.getPortalDataFile());
 		ZaniPortals.portals = man;
+		
+		// Basic Bukkit stuff.
+		Bukkit.getPluginManager().registerEvents(new BukkitPortalEventAdapter(), this);
+		this.registerCommand(new CommandListPortals("listportals"));
 		
 	}
 	
@@ -43,8 +44,12 @@ public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 		
 		ZaniPortals.savePortals();
 		
+		// Clear the abstractination stuff.
+		ZaniPortals.server = null;
 		ZaniPortals.portals = null;
 		ZaniPortals.plugin = null;
+		ZaniPortals.config = null;
+		
 		INSTANCE = null;
 		
 	}
@@ -53,6 +58,7 @@ public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 		
 		this.saveDefaultConfig();
 		this.conf = new ZaniPortalsConfig(this.getConfig());
+		ZaniPortals.config = this.conf;
 		
 	}
 	

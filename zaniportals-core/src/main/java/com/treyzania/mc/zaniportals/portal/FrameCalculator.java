@@ -14,14 +14,14 @@ public class FrameCalculator {
 
 	private static final int AIR_BLOCK_ID = 0;
 	
-	private Set<Integer> frameBlocks;
+	private Set<Integer> frameTypes;
 	private int maxPortalVolume;
 	
 	public FrameCalculator(int[] frameBlocks, int maxVolume) {
 		
 		// Can't use Arrays.asList here, sadly.
-		this.frameBlocks = new TreeSet<Integer>();
-		for (int i : frameBlocks) this.frameBlocks.add(i);
+		this.frameTypes = new TreeSet<Integer>();
+		for (int i : frameBlocks) this.frameTypes.add(i);
 		
 		this.maxPortalVolume = maxVolume;
 		
@@ -39,12 +39,12 @@ public class FrameCalculator {
 		Set<Face> exploreFaces = sign.getLockedAxis().getMovableFaces();
 		
 		// Populate the frame candidates
-		this.recurse(frameCandidates, sign, this.frameBlocks, exploreFaces, this.maxPortalVolume);
-		PortalBlock[] frameBlocks = world.getBlocks(frameCandidates.toArray(new Point3i[frameCandidates.size()]));
+		this.recurse(frameCandidates, sign.getBlockAttachedOnto(), this.frameTypes, exploreFaces, this.maxPortalVolume);
+		PortalBlock[] frameBlockCandidates = world.getBlocks(frameCandidates.toArray(new Point3i[frameCandidates.size()]));
 		
 		// Find the air blocks touching the applicable faces of the frame blocks.
 		Set<Point3i> airBlocks = new TreeSet<>();
-		for (PortalBlock block : frameBlocks) {
+		for (PortalBlock block : frameBlockCandidates) {
 			
 			for (Face f : exploreFaces) {
 				
@@ -58,32 +58,58 @@ public class FrameCalculator {
 		}
 		
 		// Find an air block that we can recursively collect all air blocks from without going over out limit.
-		Set<Integer> airId = new HashSet<>();
-		airId.add(0); // We only want the one block ID of air.
-		Set<Point3i> portalBlocks = null;
+		System.out.println("DANK REAMS");
+		Set<Point3i> portalBlocks = new TreeSet<>();
 		for (Point3i airPos : airBlocks) {
 			
-			portalBlocks = new TreeSet<>(); // Reset each time.
+			Set<Point3i> portalBlockCandidates = new TreeSet<>();
 			
 			try {
 				
 				// Recursively collect all the air blocks in the volume.
-				this.recurse(portalBlocks, world.getBlock(airPos), airId, exploreFaces, this.maxPortalVolume, this.frameBlocks);
+				this.recurse(portalBlockCandidates, world.getBlock(airPos), getAirSet(), exploreFaces, this.maxPortalVolume + 1, this.frameTypes);
+				
+				// ( Plus one so we can be sure if we're over the limit. )
 				
 			} catch (IllegalStateException e) {
 				continue;
 			}
 			
-			if (portalBlocks.size() >= this.maxPortalVolume) continue;
+			if (portalBlockCandidates.size() > this.maxPortalVolume) continue;
 			
-			// If we get to this point then it means we've found a valid set of blocks, and we don't need to reset.
-			break;
+			// Update if we are bigger than the one we have already.
+			if (portalBlockCandidates.size() > portalBlocks.size()) portalBlocks = portalBlockCandidates;
 			
 		}
 		
+		// Now find the immediate frame blocks...
+		Set<Point3i> frameBlocks = new TreeSet<>();
+		for (Point3i portalBlock : portalBlocks) {
+			
+			PortalBlock block = world.getBlock(portalBlock);
+			
+			for (Face f : exploreFaces) {
+				
+				// Find the ID of the block on the face, and add it if applicable.
+				PortalBlock possibleFrame = block.getBlockOnFace(f);
+				if (this.frameTypes.contains(possibleFrame.getId()) && !portalBlocks.contains(possibleFrame.getPoint3i())) {
+					
+					// Sets can't have duplicates, so we're fine.
+					frameBlocks.add(possibleFrame.getPoint3i());
+					
+				}
+				
+			}
+			
+		}
+		
+		// Then add the blocks of the sign and the block the sign is attached to.
+		frameBlocks.add(sign.getPoint3i());
+		frameBlocks.add(sign.getBlockAttachedOnto().getPoint3i());
+		
 		// Install the block sets into the portal.
-		portal.frameBlocks = portalBlocks.toArray(new Point3i[portalBlocks.size()]);
-		portal.portalBlocks = portalBlocks.toArray(new Point3i[portalBlocks.size()]);
+		portal.setFrameLocations(frameBlocks);
+		portal.setPortalLocations(portalBlocks);
 		
 	}
 	
@@ -102,26 +128,26 @@ public class FrameCalculator {
 	 */
 	public void recurse(Set<Point3i> visited, PortalBlock block, Set<Integer> types, Set<Face> facesTravelable, int max, Set<Integer> ignored) {
 		
-		visited.add(block.getPoint3i());
+		if (visited.size() >= max) return; // So we cannot recurse infinitely.
 		
-		boolean throwExceptions = (ignored == null) || (ignored.size() == 0);
+		boolean newlyAdded = visited.add(block.getPoint3i());
+		if (!newlyAdded) return;
+		
+		boolean throwExceptions = !((ignored == null) || (ignored.size() == 0));
 		
 		for (Face f : facesTravelable) {
 			
 			PortalBlock blockOnFace = block.getBlockOnFace(f);
-			int otherId = block.getId();
+			int otherId = blockOnFace.getId();
 			
-			// We don't need to check if the Set contains the point because Sets can't have duplicates.
 			if (types.contains(otherId)) {
 				
 				// Recursive from the block on that face, we won't be able to visit the current node because it's in the list.
-				this.recurse(visited, blockOnFace, types, facesTravelable, max);
+				this.recurse(visited, blockOnFace, types, facesTravelable, max, ignored);
 				
 			} else if (throwExceptions && !ignored.contains(otherId)) {
 				throw new IllegalStateException("Encountered block we should not be encountering!");
 			}
-			
-			if (visited.size() >= max) return; // So we cannot recurse infinitely.
 			
 		}
 		
@@ -129,6 +155,15 @@ public class FrameCalculator {
 	
 	public void recurse(Set<Point3i> visited, PortalBlock block, Set<Integer> types, Set<Face> facesTravelable, int max) {
 		this.recurse(visited, block, types, facesTravelable, max, new HashSet<Integer>());
+	}
+	
+	private static Set<Integer> getAirSet() {
+		
+		Set<Integer> s = new HashSet<>();
+		s.add(AIR_BLOCK_ID);
+		
+		return s;
+		
 	}
 	
 }

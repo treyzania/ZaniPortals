@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+
 import com.treyzania.mc.zaniportals.adapters.BukkitBlock;
 import com.treyzania.mc.zaniportals.adapters.BukkitItem;
 import com.treyzania.mc.zaniportals.adapters.BukkitPortalPlayer;
@@ -78,6 +80,15 @@ public class BukkitPortalEventAdapter implements Listener {
 		PortalBlock block = new BukkitBlock(event.getBlock());
 		
 		event.setCancelled(this.acceptor.onPlayerBreakBlock(player, block));
+		
+	}
+	
+	@EventHandler
+	public void onPlayerMove(PlayerMoveEvent event) {
+		
+		// Very simple, just wrap the player and pass the event.
+		PortalPlayer pp = new BukkitPortalPlayer(event.getPlayer());
+		event.setCancelled(this.acceptor.onMove(pp));
 		
 	}
 	

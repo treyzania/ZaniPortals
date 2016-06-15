@@ -43,4 +43,6 @@ public interface PortalSign extends PortalBlock, Wrapper {
 		return this.getPortal().getTarget();
 	}
 	
+	public PortalBlock getBlockAttachedOnto();
+	
 }

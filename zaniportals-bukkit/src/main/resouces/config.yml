@@ -13,3 +13,7 @@ PortalStructure:
     # This must be a transparent block or people won't be able to enter it.
     PortalBlock: 119
     
+    # The maximum number of blocks that the portal volume can take up.
+    # Also is the maxiumum number of frame blocks, but that will usually be less anyways.
+    MaxPortalBlocks: 150
+    

@@ -7,7 +7,7 @@ public enum Axis {
 
 	X(Face.EAST, Face.WEST),
 	Y(Face.UP, Face.DOWN),
-	Z(Face.NORTH, Face.SOUTH);
+	Z(Face.SOUTH, Face.NORTH);
 	
 	public Face positive, negative;
 	
