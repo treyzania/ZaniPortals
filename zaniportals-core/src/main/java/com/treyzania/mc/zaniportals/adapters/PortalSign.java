@@ -4,6 +4,7 @@ import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.portal.Portal;
 import com.treyzania.mc.zaniportals.portal.PortalHelper;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
+import com.treyzania.mc.zaniportals.world.Axis;
 
 public interface PortalSign extends PortalBlock, Wrapper {
 
@@ -12,6 +13,11 @@ public interface PortalSign extends PortalBlock, Wrapper {
 	
 	public void setLine(int line, String text);
 	public String getLine(int line);
+	
+	/**
+	 * @return The axis that this portal is placed on.
+	 */
+	public Axis getLockedAxis();
 	
 	public default boolean isPortaly() {
 		

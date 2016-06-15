@@ -16,8 +16,8 @@ public class Portal {
 	private PortalTarget target;
 	
 	private Point3i signBlock;
-	private Point3i[] frameBlocks;
-	private Point3i[] portalBlocks; 
+	protected Point3i[] frameBlocks;
+	protected Point3i[] portalBlocks; 
 	
 	public Portal(PortalWorld world, UUID owner, String name, Point3i[] frame, Point3i[] portal) {
 		

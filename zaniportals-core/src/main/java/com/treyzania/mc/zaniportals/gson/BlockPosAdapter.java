@@ -7,9 +7,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
-import com.treyzania.mc.zaniportals.BlockPos;
 import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
+import com.treyzania.mc.zaniportals.world.BlockPos;
 
 public class BlockPosAdapter extends Adapter<BlockPos> {
 	

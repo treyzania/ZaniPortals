@@ -8,6 +8,7 @@ import com.treyzania.mc.zaniportals.gson.Point3iAdapter;
 import com.treyzania.mc.zaniportals.gson.PortalTargetAdapter;
 import com.treyzania.mc.zaniportals.gson.PortalWorldAdapter;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
+import com.treyzania.mc.zaniportals.world.BlockPos;
 
 public class GsonManagement {
 

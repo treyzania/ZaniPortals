@@ -29,4 +29,8 @@ public interface PortalWorld extends Wrapper {
 		
 	}
 	
+	public default PortalBlock getBlock(Point3i point) {
+		return this.createLocation(point).getBlock();
+	}
+	
 }

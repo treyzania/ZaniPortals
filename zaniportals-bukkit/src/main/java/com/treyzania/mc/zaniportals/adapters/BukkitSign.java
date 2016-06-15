@@ -2,6 +2,10 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.material.Attachable;
+import org.bukkit.material.MaterialData;
+
+import com.treyzania.mc.zaniportals.world.Axis;
 
 public class BukkitSign extends BukkitBlock implements PortalSign {
 
@@ -22,6 +26,38 @@ public class BukkitSign extends BukkitBlock implements PortalSign {
 	@Override
 	public String getLine(int line) {
 		return ((Sign) this.block.getState()).getLine(line);
+	}
+
+	@Override
+	public Axis getLockedAxis() {
+		
+		MaterialData data = this.block.getState().getData();
+		
+		if (data instanceof Attachable) {
+			
+			Attachable a = (Attachable) data;
+			
+			switch (a.getAttachedFace()) {					
+				
+				case NORTH:
+				case SOUTH: {
+					return Axis.Z;
+				}
+				
+				case EAST:
+				case WEST: {
+					return Axis.X;
+				}
+				
+				default:
+					break;
+				
+			}
+			
+		}
+		
+		return null;
+		
 	}
 	
 }

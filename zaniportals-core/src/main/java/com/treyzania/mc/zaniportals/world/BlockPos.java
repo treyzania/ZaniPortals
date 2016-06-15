@@ -1,5 +1,6 @@
-package com.treyzania.mc.zaniportals;
+package com.treyzania.mc.zaniportals.world;
 
+import com.treyzania.mc.zaniportals.Point3i;
 import com.treyzania.mc.zaniportals.adapters.PortalLocation;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 
