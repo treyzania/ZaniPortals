@@ -120,8 +120,8 @@ public class PortalManager {
 				
 			}
 			
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("Something went wrong loading data! (" + e.getMessage() + ")");
 		}
 		
 	}
