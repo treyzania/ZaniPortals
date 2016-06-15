@@ -52,31 +52,30 @@ public class EventAcceptor {
 		Portal portal = ZaniPortals.portals.getPortal(sign.getLine(1));
 		PortalTarget target = new NamedPortalTarget(portal);
 		
-		if (hand == null) {
+		if (player.isSneaking()) {
 			
-			// In this case we want to get the target data.
-			PortalItem pearl = ZaniPortals.server.getItem(PortalItem.ENDER_PEARL_ID);
-			PortalLinkItem pli = pearl.convertToLinkItem();
-			pli.setTarget(target);
-			
-			player.addItem(pli);
-			player.sendMessage("Here's the link item! " + target.getExpression());
-			System.out.println(PortalHelper.serializePortalTarget(pli.getTarget()));
-			
-		} else {
-			
-			// Determine if we want to set or use the target.
-			if (hand.isPortaly()) {
+			// Sneaking lets us do configuration.
+			if (hand == null) {
+				
+				// In this case we want to get the target data.
+				PortalItem pearl = ZaniPortals.server.getItem(PortalItem.ENDER_PEARL_ID);
+				PortalLinkItem pli = pearl.convertToLinkItem();
+				pli.setTarget(target);
+				
+				player.addItem(pli);
+				player.sendMessage("Here's the link item! (" + target.getExpression() + ")");
+				
+			} else if (hand.isPortaly()) {
 				
 				player.sendMessage("Target set!");
 				portal.setTarget(hand.convertToLinkItem().getTarget());
 				
-			} else {
-				
-				player.sendMessage("Poof!");
-				portal.enter(player);
-				
 			}
+			
+		} else {
+			
+			player.sendMessage("Poof!");
+			portal.enter(player);
 			
 		}
 		

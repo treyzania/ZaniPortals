@@ -64,29 +64,7 @@ public class BukkitPortalEventAdapter implements Listener {
 			}
 			
 		}
-		/*
-		if (event.getAction() == Action.LEFT_CLICK_AIR) {
-			
-			//PortalPlayer pp = new BukkitPortalPlayer(event.getPlayer());
-			PortalItem loc = new BukkitItem(event.getPlayer().getInventory().getItemInMainHand());
-			
-			if (loc.isPortaly()) {
-				
-				
-				
-			} else {
-				System.out.println("not portaly");
-			}
-			
-			PortalLinkItem pli = loc.convertToLinkItem();
-			pli.getTarget().teleport(pp);
-			
-		} else {
-			
-			
-			
-		}
-		*/
+		
 	}
 	
 }

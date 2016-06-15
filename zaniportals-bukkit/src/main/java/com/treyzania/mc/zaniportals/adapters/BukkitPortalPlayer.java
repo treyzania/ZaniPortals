@@ -39,5 +39,10 @@ public class BukkitPortalPlayer extends BukkitEntity implements PortalPlayer, Po
 	public void addItem(PortalItem item) {
 		this.player.getInventory().addItem((ItemStack) item.getWrappedObject());
 	}
+
+	@Override
+	public boolean isSneaking() {
+		return this.player.isSneaking();
+	}
 	
 }
