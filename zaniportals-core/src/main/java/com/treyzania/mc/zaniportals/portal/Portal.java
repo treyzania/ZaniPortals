@@ -83,7 +83,20 @@ public class Portal {
 	public void enter(PortalEntity ent) {
 		this.target.teleport(ent);
 	}
-
+	
+	/**
+	 * Sets all blocks in the volume of the portal to that block.
+	 * 
+	 * @param id The ID of the block.
+	 */
+	public void fill(int id) {
+		
+		for (Point3i p : this.portalBlocks) {
+			this.world.getBlock(p).setId(id);
+		}
+		
+	}
+	
 	@Override
 	public int hashCode() {
 		return this.name.hashCode();

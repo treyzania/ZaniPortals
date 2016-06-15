@@ -38,6 +38,8 @@ public class EventAcceptor {
 		if (success) {
 			
 			ZaniPortals.getFrameCalculator().populate(portal);
+			portal.fill(ZaniPortals.config.getPortalBlockId());
+			
 			ZaniPortals.savePortals();
 			
 		}
