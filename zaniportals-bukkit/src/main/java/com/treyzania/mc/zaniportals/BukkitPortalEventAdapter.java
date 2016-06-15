@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import com.treyzania.mc.zaniportals.adapters.BukkitBlock;
@@ -64,6 +65,19 @@ public class BukkitPortalEventAdapter implements Listener {
 			}
 			
 		}
+		
+	}
+	
+	@EventHandler
+	public void onDestroy(BlockBreakEvent event) {
+		
+		if (event.getPlayer() == null) return;
+		
+		// Pull out the properties.
+		PortalPlayer player = new BukkitPortalPlayer(event.getPlayer());
+		PortalBlock block = new BukkitBlock(event.getBlock());
+		
+		event.setCancelled(this.acceptor.onPlayerBreakBlock(player, block));
 		
 	}
 	

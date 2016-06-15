@@ -7,11 +7,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.treyzania.mc.zaniportals.adapters.BukkitCommandAdapter;
 import com.treyzania.mc.zaniportals.adapters.BukkitServerProvider;
+import com.treyzania.mc.zaniportals.adapters.PortalPlugin;
 import com.treyzania.mc.zaniportals.cmd.AbstractPortalCommand;
 import com.treyzania.mc.zaniportals.cmd.CommandListPortals;
 import com.treyzania.mc.zaniportals.portal.PortalManager;
 
-public class ZaniPortalsBukkit extends JavaPlugin {
+public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 
 	public static ZaniPortalsBukkit INSTANCE;
 	
@@ -21,6 +22,7 @@ public class ZaniPortalsBukkit extends JavaPlugin {
 	public void onEnable() {
 		
 		INSTANCE = this;
+		ZaniPortals.plugin = this;
 		ZaniPortals.server = new BukkitServerProvider();
 		
 		this.loadConfig();
@@ -39,9 +41,10 @@ public class ZaniPortalsBukkit extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		
-		ZaniPortals.portals.save(this.getPortalDataFile());
-		ZaniPortals.portals = null;
+		ZaniPortals.savePortals();
 		
+		ZaniPortals.portals = null;
+		ZaniPortals.plugin = null;
 		INSTANCE = null;
 		
 	}
@@ -57,7 +60,8 @@ public class ZaniPortalsBukkit extends JavaPlugin {
 		this.getCommand(command.getName()).setExecutor(new BukkitCommandAdapter(command));
 	}
 	
-	private File getPortalDataFile() {
+	@Override
+	public File getPortalDataFile() {
 		return new File(this.getDataFolder(), "portals.json");
 	}
 	

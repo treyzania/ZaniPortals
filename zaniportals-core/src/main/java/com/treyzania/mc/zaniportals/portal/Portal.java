@@ -66,6 +66,10 @@ public class Portal {
 		this.target = target;
 	}
 	
+	public PortalTarget getTarget() {
+		return this.target;
+	}
+	
 	public void enter(PortalEntity ent) {
 		this.target.teleport(ent);
 	}

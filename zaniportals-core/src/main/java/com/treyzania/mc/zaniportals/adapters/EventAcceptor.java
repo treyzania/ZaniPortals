@@ -34,22 +34,18 @@ public class EventAcceptor {
 		portal.setSignBlock(sign.getLocation().getAsPoint3i());
 		
 		boolean success = ZaniPortals.portals.tryAddPortal(portal);
-		
+		if (success) ZaniPortals.savePortals();
 		player.sendMessage(success ? "Created portal: " + portal.name : "Failed to create portal!");
 		
 		return false;
 		
 	}
 	
-	public boolean onEnderPearlUse(PortalPlayer player, PortalItem item) {
-		return item.isPortaly();
-	}
-	
 	public boolean onSignRightClick(PortalPlayer player, PortalSign sign, PortalItem hand) {
 		
 		if (!sign.isPortaly()) return false;
+		Portal portal = sign.getPortal();
 		
-		Portal portal = ZaniPortals.portals.getPortal(sign.getLine(1));
 		PortalTarget target = new NamedPortalTarget(portal);
 		
 		if (player.isSneaking()) {
@@ -62,11 +58,14 @@ public class EventAcceptor {
 				PortalLinkItem pli = pearl.convertToLinkItem();
 				pli.setTarget(target);
 				
+				// TODO Publicness checking.
+				// TODO Permissions
 				player.addItem(pli);
 				player.sendMessage("Here's the link item! (" + target.getExpression() + ")");
 				
 			} else if (hand.isPortaly()) {
 				
+				// TODO Permissions
 				player.sendMessage("Target set!");
 				portal.setTarget(hand.convertToLinkItem().getTarget());
 				
@@ -80,6 +79,24 @@ public class EventAcceptor {
 		}
 		
 		return true;
+		
+	}
+	
+	public boolean onPlayerBreakBlock(PortalPlayer player, PortalBlock block) {
+		
+		if (!block.isSign()) return false;
+		
+		PortalSign sign = block.getSignData();
+		
+		if (!sign.isPortaly()) return false;
+		Portal portal = sign.getPortal();
+		
+		// Just remove the portal for now.
+		// TODO Permissions
+		ZaniPortals.portals.removePortal(portal);
+		ZaniPortals.savePortals();
+		
+		return false;
 		
 	}
 	
