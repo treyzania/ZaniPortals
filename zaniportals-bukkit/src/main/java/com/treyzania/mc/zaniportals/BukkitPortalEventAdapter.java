@@ -57,9 +57,11 @@ public class BukkitPortalEventAdapter implements Listener {
 				
 			}
 			
-			default:
-				break;
-			
+			default: {
+				
+				if (heldItem != null && heldItem.isPortaly()) event.setCancelled(true);
+				
+			}
 			
 		}
 		/*
