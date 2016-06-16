@@ -6,6 +6,7 @@ import com.treyzania.mc.zaniportals.portal.Portal;
 import com.treyzania.mc.zaniportals.portal.PortalHelper;
 import com.treyzania.mc.zaniportals.portal.targets.NamedPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
+import com.treyzania.mc.zaniportals.world.Face;
 
 public class EventAcceptor {
 
@@ -97,9 +98,11 @@ public class EventAcceptor {
 	
 	public boolean onPlayerBreakBlock(PortalPlayer player, PortalBlock block) {
 		
-		if (!block.isSign()) return false;
+		// First check to see if it's important, if it isn't just break out of here.  It's more efficient than to go and look up the block.
+		if (!(ZaniPortals.config.isBlockImportant(block.getId()) || block.isSign())) return false;
 		
-		Portal portal = ZaniPortals.portals.findPortal(block);
+		// Now we check for the more important things.
+		Portal portal = ZaniPortals.portals.findPortal(block.getLocation(), false, true);
 		if (portal == null) return false; // Null check.
 		
 		// Clearer this way, even though it's much more space.
@@ -122,6 +125,13 @@ public class EventAcceptor {
 		
 	}
 	
+	public boolean onNaturalDestroy(PortalBlock block) {
+		
+		// Cancels it if there is a portal there.
+		return ZaniPortals.portals.findPortal_anyBlock(block) != null;
+		
+	}
+	
 	public boolean onMove(PortalEntity ent) {
 		
 		Portal portal = ZaniPortals.portals.findPortalAtEntity(ent);
@@ -129,6 +139,30 @@ public class EventAcceptor {
 		
 		return false;
 		
+	}
+	
+	public boolean onFlow(PortalBlock from, PortalBlock to) {
+		
+		// Search to see if any nearby blocks are portals.
+		PortalBlock test = null;
+		for (Face f : Face.values()) {
+			
+			// Check for sources.
+			test = from.getBlockOnFace(f);
+			if (ZaniPortals.portals.findPortal_anyBlock(test) != null) return true;
+			
+			// Check for destinations.  (This step might not be necessary.)
+			test = to.getBlockOnFace(f);
+			if (ZaniPortals.portals.findPortal_anyBlock(test) != null) return true;
+			
+		}
+		
+		return false; // FIXME
+		
+	}
+	
+	public boolean onPlayerPlaceBlock(PortalPlayer player, PortalBlock block) {
+		return ZaniPortals.portals.findPortal(block.getLocation(), true, false) != null;
 	}
 	
 }

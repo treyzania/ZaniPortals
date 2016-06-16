@@ -5,6 +5,10 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockFromToEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -90,6 +94,41 @@ public class BukkitPortalEventAdapter implements Listener {
 		PortalPlayer pp = new BukkitPortalPlayer(event.getPlayer());
 		event.setCancelled(this.acceptor.onMove(pp));
 		
+	}
+	
+	@EventHandler
+	public void onBlockExplode(BlockExplodeEvent event) {
+		this.acceptor.onNaturalDestroy(new BukkitBlock(event.getBlock()));
+	}
+	
+	@EventHandler
+	public void onBlockSpread(BlockSpreadEvent event) {
+		
+		boolean cancel = false;
+		
+		PortalBlock block = new BukkitBlock(event.getBlock());
+		PortalBlock source = new BukkitBlock(event.getSource());
+		
+		// Won't always destroy it.  Better safe than sorry.
+		cancel |= this.acceptor.onFlow(source, block);
+		
+		event.setCancelled(cancel);
+		
+	}
+	
+	@EventHandler
+	public void onBlockChange(BlockFromToEvent event) {
+		
+		PortalBlock from = new BukkitBlock(event.getBlock());
+		PortalBlock to = new BukkitBlock(event.getToBlock());
+		
+		event.setCancelled(this.acceptor.onFlow(to, from));
+		
+	}
+	
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent event) {
+		event.setCancelled(this.acceptor.onPlayerPlaceBlock(new BukkitPortalPlayer(event.getPlayer()), new BukkitBlock(event.getBlock())));
 	}
 	
 }

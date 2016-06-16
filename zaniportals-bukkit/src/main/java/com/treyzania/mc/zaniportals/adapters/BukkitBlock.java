@@ -32,6 +32,12 @@ public class BukkitBlock implements PortalBlock {
 	
 	@SuppressWarnings("deprecation")
 	@Override
+	public void setId_noUpdate(int id) {
+		this.block.setTypeId(id, false);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
 	public void setDamage(byte damage) {
 		this.block.setData(damage);
 	}

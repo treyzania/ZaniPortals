@@ -44,5 +44,17 @@ public class ZaniPortalsConfig implements PortalConfig {
 	public int getMaxPortalSize() {
 		return this.maxPortalBlocks;
 	}
+
+	@Override
+	public boolean isBlockImportant(int id) {
+		
+		// Very simple checks here.
+		if (id == this.portalBlockId) return true;
+		if (this.portalStructureBlockIds.contains(Integer.valueOf(id))) return true;
+		if (this.signPlaceBlockIds.contains(Integer.valueOf(id))) return true;
+		
+		return false;
+		
+	}
 	
 }

@@ -16,6 +16,7 @@ public interface PortalBlock extends Wrapper {
 	
 	public void setId(int id);
 	public int getId();
+	public void setId_noUpdate(int id);
 	
 	public void setDamage(byte damage);
 	public byte getDamage();

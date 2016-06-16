@@ -10,15 +10,15 @@ public interface PortalLocation extends Wrapper {
 	public double getZ();
 	
 	public default int getBlockX() {
-		return (int) this.getX();
+		return (int) Math.floor(this.getX());
 	}
 	
 	public default int getBlockY() {
-		return (int) this.getY();
+		return (int) Math.floor(this.getY());
 	}
 	
 	public default int getBlockZ() {
-		return (int) this.getZ();
+		return (int) Math.floor(this.getZ());
 	}
 	
 	public PortalBlock getBlock();

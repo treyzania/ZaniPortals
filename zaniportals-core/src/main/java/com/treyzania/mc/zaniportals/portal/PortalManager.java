@@ -55,7 +55,10 @@ public class PortalManager {
 	}
 	
 	public void removePortal(Portal portal) {
+		
+		portal.fill(0);
 		this.portals.remove(portal);
+		
 	}
 	
 	public Portal getPortal(String name) {
@@ -95,8 +98,12 @@ public class PortalManager {
 		
 	}
 	
-	public Portal findPortal(PortalBlock block) {
-		return this.findPortal(block.getLocation(), true, true);
+	public Portal findPortal(PortalBlock block, boolean volume, boolean frame) {
+		return this.findPortal(block.getLocation(), volume, frame);
+	}
+	
+	public Portal findPortal_anyBlock(PortalBlock block) {
+		return this.findPortal(block, true, true);
 	}
 	
 	public Portal findPortalAtEntity(PortalEntity ent) {

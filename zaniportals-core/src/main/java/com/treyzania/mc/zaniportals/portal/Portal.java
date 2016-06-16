@@ -92,7 +92,7 @@ public class Portal {
 	public void fill(int id) {
 		
 		for (Point3i p : this.portalBlocks) {
-			this.world.getBlock(p).setId(id);
+			this.world.getBlock(p).setId_noUpdate(id);
 		}
 		
 	}

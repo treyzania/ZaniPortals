@@ -7,4 +7,6 @@ public interface PortalConfig {
 	
 	public int getMaxPortalSize();
 	
+	public boolean isBlockImportant(int id);
+	
 }
