@@ -2,8 +2,10 @@ package com.treyzania.mc.zaniportals.portal;
 
 import java.util.HashMap;
 
+import com.treyzania.mc.zaniportals.Perms;
 import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.adapters.PortalBlock;
+import com.treyzania.mc.zaniportals.adapters.PortalPlayer;
 import com.treyzania.mc.zaniportals.portal.targets.AbsolutePortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NamedPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NotifyInvalidPortalTarget;
@@ -83,6 +85,10 @@ public class PortalHelper {
 		
 		return Character.toString(initial).toLowerCase() + rest.replaceFirst(": ", ":");
 		
+	}
+	
+	public static boolean isPortalCompatible(PortalPlayer player, Portal portal, String permSelf, String permOther) {
+		return (player.isOwner(portal) ? player.hasPermission(Perms.USE_OWN_PORTAL) : player.hasPermission(Perms.USE_OTHER_PORTAL)) || player.isOp();
 	}
 	
 }

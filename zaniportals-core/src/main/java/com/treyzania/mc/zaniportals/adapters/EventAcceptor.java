@@ -67,19 +67,20 @@ public class EventAcceptor {
 			// Sneaking lets us do configuration.
 			if (hand == null) {
 				
+				if (!PortalHelper.isPortalCompatible(player, portal, Perms.GET_OWN_PORTAL_REFERENCE, Perms.GET_OTHER_PORTAL_REFERENCE)) return true;
+				
 				// In this case we want to get the target data.
 				PortalItem pearl = ZaniPortals.server.getItem(PortalItem.ENDER_PEARL_ID);
 				PortalLinkItem pli = pearl.convertToLinkItem();
 				pli.setTarget(target);
 				
 				// TODO Publicness checking.
-				// TODO Permissions
 				player.addItem(pli);
 				player.sendMessage("Here's the link item! (" + target.getExpression() + ")");
 				
 			} else if (hand.isPortaly()) {
 				
-				// TODO Permissions
+				if (!PortalHelper.isPortalCompatible(player, portal, Perms.SET_OWN_PORTAL_TARGET, Perms.SET_OTHER_PORTAL_TARGET)) return true;
 				player.sendMessage("Target set!");
 				portal.setTarget(hand.convertToLinkItem().getTarget());
 				
@@ -87,6 +88,7 @@ public class EventAcceptor {
 			
 		} else {
 			
+			if (!PortalHelper.isPortalCompatible(player, portal, Perms.USE_OWN_PORTAL, Perms.USE_OTHER_PORTAL)) return true;
 			player.sendMessage("Poof!");
 			portal.enter(player);
 			
@@ -107,8 +109,8 @@ public class EventAcceptor {
 		
 		// Clearer this way, even though it's much more space.
 		boolean check = false;
-		check |= (portal.owner.equals(player.getUniqueId()) && player.hasPermission(Perms.DESTROY_PORTAL));
-		check |= player.hasPermission(Perms.DESTROY_ANY_PORTAL);
+		check |= player.isOwner(portal) && player.hasPermission(Perms.DESTROY_OWN_PORTAL);
+		check |= !player.isOwner(portal) && player.hasPermission(Perms.DESTROY_OTHER_PORTAL);
 		check |= player.isOp();
 		
 		if (check) {
@@ -134,8 +136,26 @@ public class EventAcceptor {
 	
 	public boolean onMove(PortalEntity ent) {
 		
+		// TODO FIXME Doing this straight off the bat will get rather inefficient with many portals.
 		Portal portal = ZaniPortals.portals.findPortalAtEntity(ent);
-		if (portal != null) portal.enter(ent);
+		if (portal == null) return false;
+		
+		if (ent instanceof PortalPlayer) {
+			
+			PortalPlayer player = (PortalPlayer) ent;
+			
+			if (!PortalHelper.isPortalCompatible(player, portal, Perms.USE_OWN_PORTAL, Perms.USE_OTHER_PORTAL)) {
+				
+				player.sendMessage("You do not have permission to use this portal!");
+				return true;
+				
+			}
+			
+			portal.enter(player);
+			
+		} else {
+			portal.enter(ent);
+		}
 		
 		return false;
 		
@@ -157,7 +177,7 @@ public class EventAcceptor {
 			
 		}
 		
-		return false; // FIXME
+		return false;
 		
 	}
 	
