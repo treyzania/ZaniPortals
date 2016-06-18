@@ -22,7 +22,7 @@ public class NotifyInvalidPortalTarget implements PortalTarget {
 		if (ent.isPlayer()) {
 			
 			PortalPlayer pp = (PortalPlayer) ent;
-			pp.sendMessage("This portal does not have a set destination.  Please try agin later.");
+			pp.sendMessage("This portal does not have a set destination.");
 			
 		}
 		

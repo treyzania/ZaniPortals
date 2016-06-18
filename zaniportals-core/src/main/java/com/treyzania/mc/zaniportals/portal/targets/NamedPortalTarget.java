@@ -25,6 +25,8 @@ public class NamedPortalTarget implements PortalTarget {
 	public PortalLocation getDestination() {
 		
 		Portal p = ZaniPortals.portals.getPortal(this.name);
+		if (p == null) return null;
+		
 		return p.getLandingLocation(); // FIXME This is totally incorrect behavior.
 		
 	}
