@@ -9,9 +9,13 @@ import com.treyzania.mc.zaniportals.adapters.PortalLocation;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 import com.treyzania.mc.zaniportals.portal.targets.NotifyInvalidPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
+import com.treyzania.mc.zaniportals.world.Axis;
+import com.treyzania.mc.zaniportals.world.Face;
 
 public class Portal {
-
+	
+	private static final float LANDING_DROP_OFFSET_FACTOR = 1F;
+	
 	public final PortalWorld world;
 	public final String name;
 	public final UUID owner;
@@ -94,6 +98,34 @@ public class Portal {
 		for (Point3i p : this.portalBlocks) {
 			this.world.getBlock(p).setId_noUpdate(id);
 		}
+		
+	}
+	
+	public PortalLocation getLandingLocation() {
+		
+		float sumX = 0;
+		float sumY = 0;
+		float sumZ = 0;
+		
+		for (Point3i point : this.getPortalLocations()) {
+			
+			sumX += point.x;
+			sumY += point.y;
+			sumZ += point.z;
+			
+		}
+		
+		float numLocs = this.getPortalLocations().length;
+		PortalLocation averageLocation = this.world.createLocation(sumX / numLocs, sumY / numLocs, sumZ / numLocs);
+		float offset = (float) (LANDING_DROP_OFFSET_FACTOR * Math.cbrt(numLocs));
+		
+		Face direction = this.getSignBlock().getBlock().getSignData().getFace().getOpposite();
+		float dirSign = (float) direction.getAxis().getSign(direction);
+		
+		float xFac = Axis.X.isOnAxis(direction) ? 1 : 0;
+		float zFac = Axis.Z.isOnAxis(direction) ? 1 : 0;
+		
+		return averageLocation.getLocationAtOffset(dirSign * xFac * offset, 0, dirSign * zFac * offset);
 		
 	}
 	
