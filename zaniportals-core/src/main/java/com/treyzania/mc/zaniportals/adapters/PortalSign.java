@@ -5,6 +5,7 @@ import com.treyzania.mc.zaniportals.portal.Portal;
 import com.treyzania.mc.zaniportals.portal.PortalHelper;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
 import com.treyzania.mc.zaniportals.world.Axis;
+import com.treyzania.mc.zaniportals.world.Face;
 
 public interface PortalSign extends PortalBlock, Wrapper {
 
@@ -43,6 +44,7 @@ public interface PortalSign extends PortalBlock, Wrapper {
 		return this.getPortal().getTarget();
 	}
 	
+	public Face getFace();
 	public PortalBlock getBlockAttachedOnto();
 	
 }

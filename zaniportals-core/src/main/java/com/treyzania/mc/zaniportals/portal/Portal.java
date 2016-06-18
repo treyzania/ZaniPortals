@@ -20,10 +20,11 @@ public class Portal {
 	public final String name;
 	public final UUID owner;
 	private PortalTarget target = new NotifyInvalidPortalTarget(); // Default.
+	public transient long lastUpdate; // Very quick fix because of some odd behavior on Bukkit's end.
 	
 	private Point3i signBlock;
 	protected Point3i[] frameBlocks;
-	protected Point3i[] portalBlocks; 
+	protected Point3i[] portalBlocks;
 	
 	public Portal(PortalWorld world, UUID owner, String name, Point3i[] frame, Point3i[] portal) {
 		

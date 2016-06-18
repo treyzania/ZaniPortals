@@ -87,16 +87,17 @@ public class BukkitItem implements PortalItem {
 			
 			// Enable
 			im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-			if (!im.hasEnchant(Enchantment.MENDING)) im.addEnchant(Enchantment.MENDING, 1, true); // Just something that won't actually do anything.
+			this.item.setItemMeta(im);
+			if (!im.hasEnchant(Enchantment.MENDING)) this.item.addUnsafeEnchantment(Enchantment.MENDING, 1); // Just something that won't actually do anything.
 			
 		} else {
 			
 			// Disable
 			im.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
 			for (Enchantment e : im.getEnchants().keySet()) im.removeEnchant(e);
+			this.item.setItemMeta(im);
 			
 		}
-		
 		
 	}
 	

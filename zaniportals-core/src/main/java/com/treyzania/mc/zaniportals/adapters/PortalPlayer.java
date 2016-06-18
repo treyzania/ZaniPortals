@@ -13,4 +13,6 @@ public interface PortalPlayer extends PortalEntity, PortalCommandSender, Wrapper
 		return p.owner.equals(this.getUniqueId());
 	}
 	
+	public PortalPlayerInventory getInventory();
+	
 }

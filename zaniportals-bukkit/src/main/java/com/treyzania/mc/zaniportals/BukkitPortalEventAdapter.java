@@ -2,6 +2,7 @@ package com.treyzania.mc.zaniportals;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -44,7 +45,8 @@ public class BukkitPortalEventAdapter implements Listener {
 	@EventHandler
 	public void onInteract(PlayerInteractEvent event) {
 		
-		PortalPlayer pp = new BukkitPortalPlayer(event.getPlayer());
+		Player p = event.getPlayer();
+		PortalPlayer pp = new BukkitPortalPlayer(p);
 		PortalItem heldItem = (event.getItem() != null ? new BukkitItem(event.getItem()) : null);
 		
 		Block block = event.getClickedBlock();
@@ -57,7 +59,7 @@ public class BukkitPortalEventAdapter implements Listener {
 			case RIGHT_CLICK_BLOCK: {
 				
 				if (mat == Material.WALL_SIGN || mat == Material.SIGN_POST) {
-					event.setCancelled(this.acceptor.onSignRightClick(pp, pb.getSignData(), heldItem));
+					event.setCancelled(this.acceptor.onSignRightClick(pp, pb.getSignData(), heldItem, p.getInventory().getHeldItemSlot()));
 				}
 				
 				break;

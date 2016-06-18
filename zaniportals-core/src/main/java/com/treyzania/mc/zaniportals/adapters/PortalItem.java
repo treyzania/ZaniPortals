@@ -2,6 +2,8 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import java.util.List;
 
+import com.treyzania.mc.zaniportals.portal.PortalPearlType;
+
 public interface PortalItem extends Wrapper {
 
 	public static int ENDER_PEARL_ID = 368;
@@ -42,10 +44,22 @@ public interface PortalItem extends Wrapper {
 	public default boolean isPortaly() {
 		
 		if (!this.canBePortaly()) return false;
-		//if (!this.isGlowing()) return false;
+		if (!this.isGlowing()) return false;
 		if (!this.getName().equals(PORTAL_PEARL_NAME)) return false; 
 		
 		return true;
+		
+	}
+	
+	public default PortalPearlType getPortalType() {
+		
+		if (!this.isPortaly()) return null;
+		
+		for (PortalPearlType type : PortalPearlType.values()) {
+			if (this.getLore().get(0).equals(type.title)) return type;
+		}
+		
+		return null;
 		
 	}
 	

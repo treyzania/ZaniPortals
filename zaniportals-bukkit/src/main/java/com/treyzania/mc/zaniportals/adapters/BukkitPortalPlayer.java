@@ -44,5 +44,10 @@ public class BukkitPortalPlayer extends BukkitEntity implements PortalPlayer, Po
 	public boolean isSneaking() {
 		return this.player.isSneaking();
 	}
+
+	@Override
+	public PortalPlayerInventory getInventory() {
+		return new BukkitPlayerInventory(this.player.getInventory());
+	}
 	
 }

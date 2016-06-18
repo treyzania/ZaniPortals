@@ -6,6 +6,7 @@ import org.bukkit.material.Attachable;
 import org.bukkit.material.MaterialData;
 
 import com.treyzania.mc.zaniportals.world.Axis;
+import com.treyzania.mc.zaniportals.world.Face;
 
 public class BukkitSign extends BukkitBlock implements PortalSign {
 
@@ -30,6 +31,11 @@ public class BukkitSign extends BukkitBlock implements PortalSign {
 
 	@Override
 	public Axis getLockedAxis() {
+		return this.getFace().getAxis();
+	}
+	
+	@Override
+	public Face getFace() {
 		
 		MaterialData data = this.block.getState().getData();
 		
@@ -39,14 +45,20 @@ public class BukkitSign extends BukkitBlock implements PortalSign {
 			
 			switch (a.getAttachedFace()) {					
 				
-				case NORTH:
-				case SOUTH: {
-					return Axis.Z;
+				case NORTH: {
+					return Face.NORTH;
 				}
 				
-				case EAST:
+				case SOUTH: {
+					return Face.SOUTH;
+				}
+				
+				case EAST: {
+					return Face.EAST;
+				}
+				
 				case WEST: {
-					return Axis.X;
+					return Face.WEST;
 				}
 				
 				default:
@@ -56,10 +68,10 @@ public class BukkitSign extends BukkitBlock implements PortalSign {
 			
 		}
 		
-		return null;
+		return null; 
 		
 	}
-
+	
 	@Override
 	public PortalBlock getBlockAttachedOnto() {
 		
