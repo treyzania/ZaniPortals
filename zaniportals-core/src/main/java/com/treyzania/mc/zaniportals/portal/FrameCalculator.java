@@ -39,7 +39,7 @@ public class FrameCalculator {
 		Set<Face> exploreFaces = sign.getLockedAxis().getMovableFaces();
 		
 		// Populate the frame candidates
-		this.recurse(frameCandidates, sign.getBlockAttachedOnto(), this.frameTypes, exploreFaces, this.maxPortalVolume);
+		this.recurse(frameCandidates, sign.getBlockAttachedOnto(), this.frameTypes, getFacesSet(), this.maxPortalVolume);
 		PortalBlock[] frameBlockCandidates = world.getBlocks(frameCandidates.toArray(new Point3i[frameCandidates.size()]));
 		
 		// Find the air blocks touching the applicable faces of the frame blocks.
@@ -58,7 +58,6 @@ public class FrameCalculator {
 		}
 		
 		// Find an air block that we can recursively collect all air blocks from without going over out limit.
-		System.out.println("DANK REAMS");
 		Set<Point3i> portalBlocks = new TreeSet<>();
 		for (Point3i airPos : airBlocks) {
 			
@@ -163,6 +162,15 @@ public class FrameCalculator {
 		s.add(AIR_BLOCK_ID);
 		
 		return s;
+		
+	}
+	
+	private static Set<Face> getFacesSet() {
+		
+		Set<Face> faces = new HashSet<>();
+		for (Face f : Face.values()) faces.add(f);
+		
+		return faces;
 		
 	}
 	
