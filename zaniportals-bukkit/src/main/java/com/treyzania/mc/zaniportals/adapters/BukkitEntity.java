@@ -49,4 +49,22 @@ public class BukkitEntity implements PortalEntity {
 		return new BukkitPortalPlayer((Player) this.entity);
 	}
 
+	@Override
+	public void setPitch(float angle) {
+		
+		Location loc = this.entity.getLocation();
+		loc.setPitch(angle);
+		this.entity.teleport(loc);
+		
+	}
+
+	@Override
+	public void setYaw(float angle) {
+		
+		Location loc = this.entity.getLocation();
+		loc.setYaw(angle);
+		this.entity.teleport(loc);
+		
+	}
+
 }

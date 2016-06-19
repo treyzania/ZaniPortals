@@ -2,12 +2,18 @@ package com.treyzania.mc.zaniportals.world;
 
 public enum Face {
 
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST,
-	UP,
-	DOWN;
+	NORTH(180F),
+	SOUTH(0F),
+	EAST(-90F),
+	WEST(90F),
+	UP(0F),
+	DOWN(0F);
+	
+	public float angle;
+	
+	private Face(float angle) {
+		this.angle = angle;
+	}
 	
 	public Face getOpposite() {
 		

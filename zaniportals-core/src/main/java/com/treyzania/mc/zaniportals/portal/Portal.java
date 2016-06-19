@@ -124,6 +124,7 @@ public class Portal {
 		
 		// Now we actually teleport.
 		this.target.teleport(ent);
+		ent.setYaw(this.target.getDestinationYaw());
 		
 	}
 	

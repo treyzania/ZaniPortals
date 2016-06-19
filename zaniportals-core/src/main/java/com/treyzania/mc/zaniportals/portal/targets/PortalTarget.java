@@ -33,4 +33,8 @@ public interface PortalTarget {
 		
 	}
 	
+	public default float getDestinationYaw() {
+		return 0F;
+	}
+	
 }

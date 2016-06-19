@@ -16,4 +16,7 @@ public interface PortalEntity extends PossiblyPlayer, Wrapper {
 	
 	public boolean isPlayer();
 	
+	public void setPitch(float angle);
+	public void setYaw(float angle);
+	
 }

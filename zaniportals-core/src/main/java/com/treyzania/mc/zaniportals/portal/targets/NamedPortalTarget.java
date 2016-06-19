@@ -30,5 +30,13 @@ public class NamedPortalTarget implements PortalTarget {
 		return p.getLandingLocation(); // FIXME This is totally incorrect behavior.
 		
 	}
-
+	
+	@Override
+	public float getDestinationYaw() {
+		
+		Portal p = ZaniPortals.portals.getPortal(this.name);
+		return p != null ? p.getSignBlock().getBlock().getSignData().getFace().getOpposite().angle : 0F;
+		
+	}
+	
 }
