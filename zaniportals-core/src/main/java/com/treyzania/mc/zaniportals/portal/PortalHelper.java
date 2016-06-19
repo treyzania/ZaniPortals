@@ -143,6 +143,8 @@ public class PortalHelper {
 	
 	public static void interactWithPortal(PortalPlayer player, Portal portal, PortalItem hand, int slot) {
 		
+		if (portal == null) return;
+		
 		// Sneaking lets us do configuration.
 		if (player.isSneaking()) {
 			
