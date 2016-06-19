@@ -30,6 +30,12 @@
 			<version>1.15</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>net.md-5</groupId>
+			<artifactId>bungeecord-chat</artifactId>
+			<version>1.9-SNAPSHOT</version>
+		</dependency>
+		
 	</dependencies>
 	
 	<build>

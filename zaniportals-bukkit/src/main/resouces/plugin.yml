@@ -7,3 +7,7 @@ commands:
         aliases: [portals]
         description: Lists all the portals on the server.
         usage: /portals
+    giveportalactivator:
+        aliases: [giveactivator]
+        description: Gives a portal activator to the specifcied player.
+        usage: /giveportalactivator <player> [qty]

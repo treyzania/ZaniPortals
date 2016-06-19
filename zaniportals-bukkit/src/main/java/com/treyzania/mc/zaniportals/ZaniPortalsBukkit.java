@@ -9,6 +9,7 @@ import com.treyzania.mc.zaniportals.adapters.BukkitCommandAdapter;
 import com.treyzania.mc.zaniportals.adapters.BukkitServerProvider;
 import com.treyzania.mc.zaniportals.adapters.PortalPlugin;
 import com.treyzania.mc.zaniportals.cmd.AbstractPortalCommand;
+import com.treyzania.mc.zaniportals.cmd.CommandGivePortalActivator;
 import com.treyzania.mc.zaniportals.cmd.CommandListPortals;
 import com.treyzania.mc.zaniportals.portal.PortalManager;
 
@@ -36,6 +37,7 @@ public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 		// Basic Bukkit stuff.
 		Bukkit.getPluginManager().registerEvents(new BukkitPortalEventAdapter(), this);
 		this.registerCommand(new CommandListPortals("listportals"));
+		this.registerCommand(new CommandGivePortalActivator("giveactivator"));
 		
 	}
 	

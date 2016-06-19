@@ -17,4 +17,7 @@ public class Perms {
 	public static final String SET_OWN_PORTAL_TARGET = "zaniportals.portal.settarget.own";
 	public static final String SET_OTHER_PORTAL_TARGET = "zaniportals.portal.settarget.other";
 	
+	// Commands
+	public static final String GIVE_ACTIVATOR = "zaniportals.cmd.giveactivator";
+	
 }

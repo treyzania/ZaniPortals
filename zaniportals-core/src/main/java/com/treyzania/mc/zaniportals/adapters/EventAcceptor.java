@@ -4,54 +4,12 @@ import com.treyzania.mc.zaniportals.Perms;
 import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.portal.Portal;
 import com.treyzania.mc.zaniportals.portal.PortalHelper;
-import com.treyzania.mc.zaniportals.portal.targets.NamedPortalTarget;
-import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
+import com.treyzania.mc.zaniportals.portal.PortalPearlType;
 import com.treyzania.mc.zaniportals.world.Face;
 
 public class EventAcceptor {
 	
-	private static final long PORTAL_UPDATE_DELAY = 250L;
-	
 	public boolean onSignUpdate(PortalPlayer player, PortalSign sign, String[] lines) {
-		
-		// Validation.
-		if (!PortalHelper.isValidNewSignSyntax(lines)) return false; // Do nothing.
-		if (!PortalHelper.isValidSignBlock(sign)) return false; // Do nothing.
-		if (!(player.hasPermission(Perms.CREATE_PORTAL) || player.isOp())) {
-			
-			player.sendMessage("You don't have permission to do that!");
-			return false;
-			
-		}
-		
-		String name = lines[1];
-		
-		if (ZaniPortals.portals.hasPortalWithName(name)) {
-			
-			player.sendMessage("A portal with that name already exists!");
-			return true; // Cancel sign update.
-			
-		}
-		
-		// Create the actual portal.
-		Portal portal = new Portal(player.getWorld(), player.getUniqueId(), name);
-		portal.setSignBlock(sign.getLocation().getAsPoint3i());
-		
-		boolean success = ZaniPortals.portals.tryAddPortal(portal);
-		if (success) {
-			
-			ZaniPortals.getFrameCalculator().populate(portal);
-			portal.fill(ZaniPortals.config.getPortalBlockId());
-			
-			ZaniPortals.savePortals();
-			
-		}
-		
-		player.sendMessage(
-			success
-			? "Created portal " + portal.name + " with " + portal.getFrameLocations().length + " frame blocks and " + portal.getPortalLocations().length + " portal blocks."
-			: "Failed to create portal!"
-		);
 		
 		return false;
 		
@@ -62,83 +20,52 @@ public class EventAcceptor {
 		if (!sign.isPortaly()) return false;
 		Portal portal = sign.getPortal();
 		
-		// Sneaking lets us do configuration.
-		if (player.isSneaking()) {
+		if (hand != null) {
 			
-			if (portal.lastUpdate + PORTAL_UPDATE_DELAY >= System.currentTimeMillis()) return true;
-			portal.lastUpdate = System.currentTimeMillis();
+			PortalPearlType type = hand.getPearlType();
 			
-			// Very yucky mess to check if this is the same portal thing.
-			boolean isPortalLinkSameAsThisPortal = false;
-			if (hand != null && hand.isPortaly()) {
+			switch (type) {
 				
-				PortalLinkItem pli = hand.convertToLinkItem();
-				PortalTarget pt = pli.getTarget();
+				case LINK: {
+					
+					PortalHelper.interactWithPortal(player, portal, hand, slot);
+					break;
+					
+				}
 				
-				isPortalLinkSameAsThisPortal = pt instanceof NamedPortalTarget && ((NamedPortalTarget) pt).getName().equals(portal.name);
+				case ACTIVATOR: {
+					
+					Portal created = PortalHelper.tryCreatePortal(player, sign);
+					
+					if (created != null) {
+						
+						// Remove the item.
+						if (hand.getSize() == 1) {
+							player.getInventory().setItem(ZaniPortals.server.getItem(0), slot); // Yucky hax to make this work.
+						} else {
+							hand.setSize(hand.getSize() - 1);
+						}
+						
+						player.sendMessage("Created portal: " + portal.name);
+						
+					} else {
+						player.sendMessage("Failed to create portal");
+					}
+					
+					break;
+					
+				}
 				
-			}
-			
-			// Simplified logic here.
-			if (hand == null || isPortalLinkSameAsThisPortal) {
-				givePortalLinkItem(player, portal);
-			} else {
-				setPortalTarget(portal, player, hand, slot);
+				default:
+					break;
+				
 			}
 			
 		} else {
-			
-			if (!PortalHelper.isPortalCompatible(player, portal, Perms.USE_OWN_PORTAL, Perms.USE_OTHER_PORTAL)) return true;
-			player.sendMessage("Poof!");
-			portal.enter(player);
-			
-		}
+			PortalHelper.interactWithPortal(player, portal, hand, slot);
+		} 
 		
 		return true;
-		
-	}
-	
-	private static void givePortalLinkItem(PortalPlayer player, Portal portal) {
-		
-		if (!PortalHelper.isPortalCompatible(player, portal, Perms.GET_OWN_PORTAL_REFERENCE, Perms.GET_OTHER_PORTAL_REFERENCE)) return;
-		
-		PortalTarget target = new NamedPortalTarget(portal);
-		
-		// In this case we want to get the target data.
-		PortalItem pearl = ZaniPortals.server.getItem(PortalItem.ENDER_PEARL_ID);
-		PortalLinkItem pli = pearl.convertToLinkItem();
-		pli.setTarget(target);
-		
-		// TODO Publicness checking.
-		player.addItem(pli);
-		player.sendMessage("Here's the link item! (" + target.getExpression() + ")");
-		
-	}
-	
-	private static void setPortalTarget(Portal portal, PortalPlayer player, PortalItem hand, int slot) {
-		
-		if (!PortalHelper.isPortalCompatible(player, portal, Perms.SET_OWN_PORTAL_TARGET, Perms.SET_OTHER_PORTAL_TARGET)) return;
-		
-		PortalTarget target = hand.convertToLinkItem().getTarget();
-		
-		if (!target.getName().equals(portal.name)) {
-			
-			player.sendMessage("Target set!");
-			portal.setTarget(target);
-			
-		} else {
-			
-			// This shouldn't normally happen.
-			player.sendMessage("You can't set a portal to target itself!");
-			
-		}
-		
-		// Remove the item.
-		if (hand.getSize() == 1) {
-			player.getInventory().setItem(ZaniPortals.server.getItem(0), slot); // Yucky hax to make this work.
-		} else {
-			hand.setSize(hand.getSize() - 1);
-		}
 		
 	}
 	
