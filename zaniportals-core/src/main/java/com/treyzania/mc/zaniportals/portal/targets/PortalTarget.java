@@ -30,6 +30,7 @@ public interface PortalTarget {
 		}
 		
 		ent.setLocation(baseLocation.getLocationAtOffset(0.5, 0, 0.5));
+		ent.setYaw(this.getDestinationYaw());
 		
 	}
 	
