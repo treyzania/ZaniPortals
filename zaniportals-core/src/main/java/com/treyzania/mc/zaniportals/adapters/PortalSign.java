@@ -7,6 +7,8 @@ import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
 import com.treyzania.mc.zaniportals.world.Axis;
 import com.treyzania.mc.zaniportals.world.Face;
 
+import net.md_5.bungee.api.ChatColor;
+
 public interface PortalSign extends PortalBlock, Wrapper {
 
 	public static int WALL_SIGN_ID = 68;
@@ -22,7 +24,7 @@ public interface PortalSign extends PortalBlock, Wrapper {
 	
 	public default boolean isPortaly() {
 		
-		if (!this.getLine(0).equals("[Portal]")) return false;
+		if (!PortalHelper.isValidNewSignSyntax(this)) return false;
 		
 		return true;
 		
@@ -37,7 +39,7 @@ public interface PortalSign extends PortalBlock, Wrapper {
 	}
 	
 	public default Portal getPortal() {
-		return ZaniPortals.portals.getPortal(this.getLine(PORTAL_DATA_LINE));
+		return ZaniPortals.portals.getPortal(ChatColor.stripColor(this.getLine(PORTAL_DATA_LINE)));
 	}
 	
 	public default PortalTarget getTarget() {

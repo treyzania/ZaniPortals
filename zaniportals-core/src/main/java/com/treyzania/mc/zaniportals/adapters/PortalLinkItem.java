@@ -6,6 +6,8 @@ import com.treyzania.mc.zaniportals.portal.PortalHelper;
 import com.treyzania.mc.zaniportals.portal.PortalPearlType;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
 
+import net.md_5.bungee.api.ChatColor;
+
 public interface PortalLinkItem extends PortalItem {
 
 	public default void setTarget(PortalTarget target) {
@@ -14,7 +16,7 @@ public interface PortalLinkItem extends PortalItem {
 		String pretty = PortalHelper.makeTargetSerializationPretty(data);
 		
 		this.resetPearlType(PortalPearlType.LINK);;
-		this.appendLore(pretty);
+		this.appendLore(ChatColor.BLUE + pretty);
 		
 	}
 	
@@ -25,7 +27,7 @@ public interface PortalLinkItem extends PortalItem {
 		// Validate
 		if (!lore.get(0).equals(PortalPearlType.LINK.title)) throw new NullPointerException("Invalid portal link item!"); 
 		
-		String data = PortalHelper.makeTargetSerializationConforming(lore.get(1));
+		String data = PortalHelper.makeTargetSerializationConforming(ChatColor.stripColor(lore.get(1)));
 		
 		// Actually deserialize
 		return PortalHelper.deserializePortalTarget(data);

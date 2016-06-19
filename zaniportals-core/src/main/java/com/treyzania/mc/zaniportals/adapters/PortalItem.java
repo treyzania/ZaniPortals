@@ -6,6 +6,8 @@ import java.util.List;
 import com.treyzania.mc.zaniportals.portal.Items;
 import com.treyzania.mc.zaniportals.portal.PortalPearlType;
 
+import net.md_5.bungee.api.ChatColor;
+
 public interface PortalItem extends Wrapper {
 
 	public void setId(int id);
@@ -54,7 +56,7 @@ public interface PortalItem extends Wrapper {
 		
 		if (!this.canBePortaly()) return false;
 		if (!this.isGlowing()) return false;
-		if (!this.getName().equals(Items.PORTAL_PEARL_NAME)) return false; 
+		if (!ChatColor.stripColor(this.getName()).equals(ChatColor.stripColor(Items.PORTAL_PEARL_NAME))) return false; 
 		
 		return true;
 		
@@ -63,12 +65,7 @@ public interface PortalItem extends Wrapper {
 	public default PortalPearlType getPearlType() {
 		
 		if (!this.isPortaly()) return null;
-		
-		for (PortalPearlType type : PortalPearlType.values()) {
-			if (this.getLore().get(0).equals(type.title)) return type;
-		}
-		
-		return null;
+		return PortalPearlType.getType(this.getLore().get(0));
 		
 	}
 	

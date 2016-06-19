@@ -53,26 +53,31 @@ public class BukkitPortalEventAdapter implements Listener {
 		Material mat = (block != null) ? block.getType() : null;
 		PortalBlock pb = new BukkitBlock(block);
 		
+		if (heldItem != null && !heldItem.isPortaly()) return;
+		
 		switch (event.getAction()) {
 			
 			// Just forward it right through.
 			case RIGHT_CLICK_BLOCK: {
 				
-				if (mat == Material.WALL_SIGN || mat == Material.SIGN_POST) {
-					event.setCancelled(this.acceptor.onSignRightClick(pp, pb.getSignData(), heldItem, p.getInventory().getHeldItemSlot()));
+				if (mat == Material.WALL_SIGN) {
+					
+					// Finally, we can just pass everything through here.
+					this.acceptor.onSignRightClick(pp, pb.getSignData(), heldItem, p.getInventory().getHeldItemSlot());
+					
 				}
 				
 				break;
 				
 			}
 			
-			default: {
-				
-				if (heldItem != null && heldItem.isPortaly()) event.setCancelled(true);
-				
-			}
+			default:
+				break; // Nothing to do here.
 			
 		}
+		
+		// At this point we know it's a portaly item and we don't want people to use it.
+		event.setCancelled(true);
 		
 	}
 	

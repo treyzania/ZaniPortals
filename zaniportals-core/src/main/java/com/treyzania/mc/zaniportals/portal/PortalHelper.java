@@ -15,14 +15,15 @@ import com.treyzania.mc.zaniportals.portal.targets.NotifyInvalidPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.PlayerPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class PortalHelper {
 	
 	private static HashMap<Class<? extends PortalTarget>, String> portalTargetClasses = new HashMap<>();
 	
 	public static boolean isValidNewSignSyntax(PortalSign sign) {
 		
-		if (!sign.getLine(0).equals("[Portal]")) return false;
-		
+		if (!ChatColor.stripColor(sign.getLine(0)).equals("[Portal]")) return false;
 		return true;
 		
 	}
@@ -128,7 +129,10 @@ public class PortalHelper {
 			} else {
 				ZaniPortals.portals.removePortal(portal);
 			}
-		
+			
+			sign.setLine(0, ChatColor.BLUE + "[Portal]");
+			sign.setLine(1, ChatColor.BOLD + name);
+			
 		} else {
 			return null;
 		}

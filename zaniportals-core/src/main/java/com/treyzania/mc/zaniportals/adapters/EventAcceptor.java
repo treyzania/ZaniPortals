@@ -7,6 +7,8 @@ import com.treyzania.mc.zaniportals.portal.PortalHelper;
 import com.treyzania.mc.zaniportals.portal.PortalPearlType;
 import com.treyzania.mc.zaniportals.world.Face;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class EventAcceptor {
 	
 	public boolean onSignUpdate(PortalPlayer player, PortalSign sign, String[] lines) {
@@ -15,14 +17,15 @@ public class EventAcceptor {
 		
 	}
 	
-	public boolean onSignRightClick(PortalPlayer player, PortalSign sign, PortalItem hand, int slot) {
+	public void onSignRightClick(PortalPlayer player, PortalSign sign, PortalItem hand, int slot) {
 		
-		if (!sign.isPortaly()) return false;
+		if (!sign.isPortaly()) return;
 		Portal portal = sign.getPortal();
 		
 		if (hand != null) {
 			
 			PortalPearlType type = hand.getPearlType();
+			if (type == null) return;
 			
 			switch (type) {
 				
@@ -46,10 +49,10 @@ public class EventAcceptor {
 							hand.setSize(hand.getSize() - 1);
 						}
 						
-						player.sendMessage("Created portal: " + portal.name);
+						player.sendMessage(ChatColor.GREEN + "Created portal: " + created.name);
 						
 					} else {
-						player.sendMessage("Failed to create portal");
+						player.sendMessage(ChatColor.RED + "Failed to create portal");
 					}
 					
 					break;
@@ -64,8 +67,6 @@ public class EventAcceptor {
 		} else {
 			PortalHelper.interactWithPortal(player, portal, hand, slot);
 		} 
-		
-		return true;
 		
 	}
 	

@@ -6,11 +6,14 @@ import java.util.UUID;
 import com.treyzania.mc.zaniportals.Point3i;
 import com.treyzania.mc.zaniportals.adapters.PortalEntity;
 import com.treyzania.mc.zaniportals.adapters.PortalLocation;
+import com.treyzania.mc.zaniportals.adapters.PortalSign;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 import com.treyzania.mc.zaniportals.portal.targets.NotifyInvalidPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
 import com.treyzania.mc.zaniportals.world.Axis;
 import com.treyzania.mc.zaniportals.world.Face;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class Portal {
 	
@@ -78,7 +81,17 @@ public class Portal {
 	}
 	
 	public void setTarget(PortalTarget target) {
+		
 		this.target = target;
+		this.updateTargetLine();
+		
+	}
+	
+	public void updateTargetLine() {
+		
+		PortalSign sign = this.getSignBlock().getBlock().getSignData();
+		if (sign != null && target != null) sign.setLine(3, ChatColor.ITALIC + target.getName());
+		
 	}
 	
 	public PortalTarget getTarget() {
