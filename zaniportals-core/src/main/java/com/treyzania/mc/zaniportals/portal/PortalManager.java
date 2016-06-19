@@ -18,6 +18,7 @@ import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.adapters.PortalBlock;
 import com.treyzania.mc.zaniportals.adapters.PortalEntity;
 import com.treyzania.mc.zaniportals.adapters.PortalLocation;
+import com.treyzania.mc.zaniportals.adapters.PortalSign;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 
 public class PortalManager {
@@ -77,7 +78,8 @@ public class PortalManager {
 	 */
 	public Portal findPortal(PortalLocation loc, boolean volume, boolean frame) {
 		
-		if (!ZaniPortals.config.isBlockImportant(loc.getBlock().getId())) return null;
+		int id = loc.getBlock().getId();
+		if (id != PortalSign.WALL_SIGN_ID && !ZaniPortals.config.isBlockImportant(id)) return null;
 		
 		PortalWorld w = loc.getWorld();
 		Point3i point = loc.getAsPoint3i();

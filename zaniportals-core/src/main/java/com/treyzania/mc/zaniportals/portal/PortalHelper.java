@@ -106,7 +106,7 @@ public class PortalHelper {
 			
 		}
 		
-		String name = sign.getLine(1);
+		String name = ChatColor.stripColor(sign.getLine(1));
 		
 		if (ZaniPortals.portals.hasPortalWithName(name)) {
 			

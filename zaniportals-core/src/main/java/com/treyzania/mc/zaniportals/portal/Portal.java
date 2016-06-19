@@ -107,7 +107,7 @@ public class Portal {
 			sign.setLine(2, ChatColor.DARK_GRAY + username.substring(0, Math.min(12, username.length())));
 			
 			// If we have a real target, put that in there in italics.  If not, leave it blank.
-			sign.setLine(3, (this.target != null || this.target instanceof NotifyInvalidPortalTarget) ? ChatColor.ITALIC + target.getName() : "");
+			sign.setLine(3, (this.target != null && !(this.target instanceof NotifyInvalidPortalTarget)) ? ChatColor.ITALIC + target.getName() : "");
 			
 		}
 		
