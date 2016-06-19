@@ -1,6 +1,7 @@
 package com.treyzania.mc.zaniportals.portal;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 import com.treyzania.mc.zaniportals.Perms;
 import com.treyzania.mc.zaniportals.ZaniPortals;
@@ -9,6 +10,7 @@ import com.treyzania.mc.zaniportals.adapters.PortalPlayer;
 import com.treyzania.mc.zaniportals.portal.targets.AbsolutePortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NamedPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.NotifyInvalidPortalTarget;
+import com.treyzania.mc.zaniportals.portal.targets.PlayerPortalTarget;
 import com.treyzania.mc.zaniportals.portal.targets.PortalTarget;
 
 public class PortalHelper {
@@ -53,6 +55,8 @@ public class PortalHelper {
 			return new NamedPortalTarget(parts[1]);
 		} else if (clazz == NotifyInvalidPortalTarget.class) {
 			return new NotifyInvalidPortalTarget();
+		} else if (clazz == PlayerPortalTarget.class) {
+			return new PlayerPortalTarget(UUID.fromString(parts[1]));
 		}
 		
 		return null;
@@ -64,6 +68,7 @@ public class PortalHelper {
 		portalTargetClasses.put(AbsolutePortalTarget.class, "absolute");
 		portalTargetClasses.put(NamedPortalTarget.class, "portal");
 		portalTargetClasses.put(NotifyInvalidPortalTarget.class, "invalid");
+		portalTargetClasses.put(PlayerPortalTarget.class, "player");
 		
 	}
 

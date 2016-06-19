@@ -1,6 +1,9 @@
 package com.treyzania.mc.zaniportals.adapters;
 
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.treyzania.mc.zaniportals.ZaniPortalsBukkit;
@@ -37,6 +40,16 @@ public class BukkitServerProvider implements ServerProvider {
 	@Override
 	public PortalItem getItem(int id) {
 		return new BukkitItem(new ItemStack(id));
+	}
+
+	@Override
+	public PortalPlayer getPlayer(UUID uuid) {
+		
+		Player p = Bukkit.getPlayer(uuid);
+		if (p == null) return null;
+		
+		return new BukkitPortalPlayer(p);
+		
 	}
 
 }

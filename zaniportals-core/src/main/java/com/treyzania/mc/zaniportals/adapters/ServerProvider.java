@@ -1,5 +1,7 @@
 package com.treyzania.mc.zaniportals.adapters;
 
+import java.util.UUID;
+
 public interface ServerProvider {
 
 	public void broadcast(String message);
@@ -19,5 +21,6 @@ public interface ServerProvider {
 	public PortalWorld getWorld(String name);
 	
 	public PortalItem getItem(int id);
+	public PortalPlayer getPlayer(UUID uuid);
 	
 }
