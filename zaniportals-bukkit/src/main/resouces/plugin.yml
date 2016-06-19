@@ -15,3 +15,7 @@ commands:
         aliases: [giveplayerpearl, playerpearl]
         description: Gives the user a link pearl that teleports subjects to a player, if online.
         usage: /giveplayerpearl <UUID | online player name> [qty]
+    setportalaccess:
+        aliases: [pacc]
+        description: Sets who can get a link item from a portal.
+        usage: /setportalaccess <portal name> <self|all>

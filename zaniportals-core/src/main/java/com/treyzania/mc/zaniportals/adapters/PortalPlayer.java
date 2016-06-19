@@ -2,7 +2,7 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import com.treyzania.mc.zaniportals.portal.Portal;
 
-public interface PortalPlayer extends PortalEntity, PortalCommandSender, Wrapper {
+public interface PortalPlayer extends PortalPermissible, PortalEntity, PortalCommandSender, Wrapper {
 	
 	public String getDisplayName();
 	public void addItem(PortalItem item);

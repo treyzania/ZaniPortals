@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.treyzania.mc.zaniportals.Point3i;
+import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.adapters.PortalEntity;
 import com.treyzania.mc.zaniportals.adapters.PortalLocation;
 import com.treyzania.mc.zaniportals.adapters.PortalSign;
@@ -28,6 +29,8 @@ public class Portal {
 	private Point3i signBlock;
 	protected Point3i[] frameBlocks;
 	protected Point3i[] portalBlocks;
+	
+	public boolean isPublicLink = false;
 	
 	public Portal(PortalWorld world, UUID owner, String name, Point3i[] frame, Point3i[] portal) {
 		
@@ -83,14 +86,30 @@ public class Portal {
 	public void setTarget(PortalTarget target) {
 		
 		this.target = target;
-		this.updateTargetLine();
+		this.updateSign();
 		
 	}
 	
-	public void updateTargetLine() {
+	public void updateSign() {
 		
 		PortalSign sign = this.getSignBlock().getBlock().getSignData();
-		if (sign != null && target != null) sign.setLine(3, ChatColor.ITALIC + target.getName());
+		
+		if (sign != null) {
+			
+			// Green if public, blue if private.
+			sign.setLine(0, (this.isPublicLink ? ChatColor.DARK_GREEN : ChatColor.BLUE) + "[Portal]");
+			
+			// Just make the name of the portal bold.
+			sign.setLine(1, ChatColor.BOLD + this.name);
+			
+			// Only do 12 characters so it's not absurd.
+			String username = ZaniPortals.server.getUsername(this.owner);
+			sign.setLine(2, ChatColor.DARK_GRAY + username.substring(0, Math.min(12, username.length())));
+			
+			// If we have a real target, put that in there in italics.  If not, leave it blank.
+			sign.setLine(3, (this.target != null || this.target instanceof NotifyInvalidPortalTarget) ? ChatColor.ITALIC + target.getName() : "");
+			
+		}
 		
 	}
 	
@@ -101,7 +120,7 @@ public class Portal {
 	public void enter(PortalEntity ent) {
 		
 		// This is the only place that we can be sure that the block is loaded for us to update it, sadly.
-		this.updateTargetLine();
+		this.updateSign();
 		
 		// Now we actually teleport.
 		this.target.teleport(ent);

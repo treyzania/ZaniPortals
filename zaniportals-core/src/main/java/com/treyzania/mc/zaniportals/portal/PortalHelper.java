@@ -92,7 +92,7 @@ public class PortalHelper {
 	}
 	
 	public static boolean isPortalCompatible(PortalPlayer player, Portal portal, String permSelf, String permOther) {
-		return (player.isOwner(portal) ? player.hasPermission(Perms.USE_OWN_PORTAL) : player.hasPermission(Perms.USE_OTHER_PORTAL)) || player.isOp();
+		return player.hasPermission(permOther) || (player.isOwner(portal) && player.hasPermission(permSelf)) || player.isOp();
 	}
 	
 	public static Portal tryCreatePortal(PortalPlayer player, PortalSign sign) {
@@ -130,8 +130,8 @@ public class PortalHelper {
 				ZaniPortals.portals.removePortal(portal);
 			}
 			
-			sign.setLine(0, ChatColor.BLUE + "[Portal]");
-			sign.setLine(1, ChatColor.BOLD + name);
+			// Everything can be handled by the Portal object itself.
+			portal.updateSign();
 			
 		} else {
 			return null;

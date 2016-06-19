@@ -65,19 +65,33 @@ public class BukkitPortalEventAdapter implements Listener {
 					// Finally, we can just pass everything through here.
 					this.acceptor.onSignRightClick(pp, pb.getSignData(), heldItem, p.getInventory().getHeldItemSlot());
 					
+					
 				}
 				
+				event.setCancelled(true);
 				break;
 				
 			}
 			
-			default:
+			case RIGHT_CLICK_AIR: {
+				
+				event.setCancelled(true);
+				break;
+				
+			}
+			
+			case LEFT_CLICK_BLOCK:
+			case LEFT_CLICK_AIR:
+			default: {
+				
+				event.setCancelled(false);
 				break; // Nothing to do here.
+				
+			}
 			
 		}
 		
-		// At this point we know it's a portaly item and we don't want people to use it.
-		event.setCancelled(true);
+		
 		
 	}
 	

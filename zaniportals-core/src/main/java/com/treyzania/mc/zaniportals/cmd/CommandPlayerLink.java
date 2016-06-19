@@ -36,7 +36,7 @@ public class CommandPlayerLink extends StandardPortalCommand {
 		
 		if (args.length != 1 && args.length != 2) return false;
 		
-		String player = args[1];
+		String player = args[0];
 		int num = 1;
 		
 		try {
