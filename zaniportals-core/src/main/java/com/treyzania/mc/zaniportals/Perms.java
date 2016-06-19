@@ -19,5 +19,6 @@ public class Perms {
 	
 	// Commands
 	public static final String GIVE_ACTIVATOR = "zaniportals.cmd.giveactivator";
+	public static final String GIVE_PLAYER_LINK = "zaniportals.cmd.giveplayerlink";
 	
 }

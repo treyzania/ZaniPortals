@@ -99,7 +99,13 @@ public class Portal {
 	}
 	
 	public void enter(PortalEntity ent) {
+		
+		// This is the only place that we can be sure that the block is loaded for us to update it, sadly.
+		this.updateTargetLine();
+		
+		// Now we actually teleport.
 		this.target.teleport(ent);
+		
 	}
 	
 	/**

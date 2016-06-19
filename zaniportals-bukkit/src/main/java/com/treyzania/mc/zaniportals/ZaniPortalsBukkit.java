@@ -11,6 +11,7 @@ import com.treyzania.mc.zaniportals.adapters.PortalPlugin;
 import com.treyzania.mc.zaniportals.cmd.AbstractPortalCommand;
 import com.treyzania.mc.zaniportals.cmd.CommandGivePortalActivator;
 import com.treyzania.mc.zaniportals.cmd.CommandListPortals;
+import com.treyzania.mc.zaniportals.cmd.CommandPlayerLink;
 import com.treyzania.mc.zaniportals.portal.PortalManager;
 
 public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
@@ -38,6 +39,7 @@ public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 		Bukkit.getPluginManager().registerEvents(new BukkitPortalEventAdapter(), this);
 		this.registerCommand(new CommandListPortals("listportals"));
 		this.registerCommand(new CommandGivePortalActivator("giveactivator"));
+		this.registerCommand(new CommandPlayerLink("giveplayerlinkpearl"));
 		
 	}
 	

@@ -16,7 +16,7 @@ public class PlayerPortalTarget implements PortalTarget {
 	
 	@Override
 	public String getName() {
-		return this.player.toString().substring(0, 8);
+		return ZaniPortals.server.getUsername(this.player);
 	}
 
 	@Override

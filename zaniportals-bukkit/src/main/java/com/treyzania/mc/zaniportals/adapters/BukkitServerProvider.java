@@ -61,5 +61,10 @@ public class BukkitServerProvider implements ServerProvider {
 		return new BukkitPortalPlayer(p);
 		
 	}
+
+	@Override
+	public String getUsername(UUID uuid) {
+		return Bukkit.getOfflinePlayer(uuid).getName();
+	}
 	
 }

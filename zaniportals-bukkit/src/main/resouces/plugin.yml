@@ -11,3 +11,7 @@ commands:
         aliases: [giveactivator]
         description: Gives a portal activator to the specifcied player.
         usage: /giveportalactivator <player> [qty]
+    giveplayerlinkpearl:
+        aliases: [giveplayerpearl, playerpearl]
+        description: Gives the user a link pearl that teleports subjects to a player, if online.
+        usage: /giveplayerpearl <UUID | online player name> [qty]

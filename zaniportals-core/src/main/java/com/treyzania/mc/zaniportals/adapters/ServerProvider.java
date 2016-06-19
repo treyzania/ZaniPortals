@@ -24,4 +24,6 @@ public interface ServerProvider {
 	public PortalPlayer getPlayer(UUID uuid);
 	public PortalPlayer getPlayer(String name);
 	
+	public String getUsername(UUID uuid);
+	
 }
