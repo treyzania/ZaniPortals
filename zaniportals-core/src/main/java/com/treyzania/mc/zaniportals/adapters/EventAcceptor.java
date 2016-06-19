@@ -72,9 +72,6 @@ public class EventAcceptor {
 	
 	public boolean onPlayerBreakBlock(PortalPlayer player, PortalBlock block) {
 		
-		// First check to see if it's important, if it isn't just break out of here.  It's more efficient than to go and look up the block.
-		if (!(ZaniPortals.config.isBlockImportant(block.getId()) || block.isSign())) return false;
-		
 		// Now we check for the more important things.
 		Portal portal = ZaniPortals.portals.findPortal(block.getLocation(), false, true);
 		if (portal == null) return false; // Null check.

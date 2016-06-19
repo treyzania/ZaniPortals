@@ -14,6 +14,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.treyzania.mc.zaniportals.GsonManagement;
 import com.treyzania.mc.zaniportals.Point3i;
+import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.adapters.PortalBlock;
 import com.treyzania.mc.zaniportals.adapters.PortalEntity;
 import com.treyzania.mc.zaniportals.adapters.PortalLocation;
@@ -75,6 +76,8 @@ public class PortalManager {
 	 * UGHH TERRIBLE SIGNATURE.
 	 */
 	public Portal findPortal(PortalLocation loc, boolean volume, boolean frame) {
+		
+		if (!ZaniPortals.config.isBlockImportant(loc.getBlock().getId())) return null;
 		
 		PortalWorld w = loc.getWorld();
 		Point3i point = loc.getAsPoint3i();
