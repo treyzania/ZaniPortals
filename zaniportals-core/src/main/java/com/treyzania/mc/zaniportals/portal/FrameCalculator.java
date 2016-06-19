@@ -42,42 +42,46 @@ public class FrameCalculator {
 		this.recurse(frameCandidates, sign.getBlockAttachedOnto(), this.frameTypes, getFacesSet(), this.maxPortalVolume);
 		PortalBlock[] frameBlockCandidates = world.getBlocks(frameCandidates.toArray(new Point3i[frameCandidates.size()]));
 		
-		// Find the air blocks touching the applicable faces of the frame blocks.
-		Set<Point3i> airBlocks = new TreeSet<>();
+		// Loop through all the frame block candidates.
+		Set<Point3i> portalBlocks = new TreeSet<>();
 		for (PortalBlock block : frameBlockCandidates) {
 			
-			for (Face f : exploreFaces) {
+			// We want to look at all faces here for now.
+			for (Face f : getFacesSet()) {
 				
 				PortalBlock possibleAir = block.getBlockOnFace(f);
 				
 				// We don't need to check if the Set contains the point because Sets can't have duplicates.
-				if (possibleAir.getId() == AIR_BLOCK_ID) airBlocks.add(possibleAir.getPoint3i());
+				if (possibleAir.getId() == AIR_BLOCK_ID) {
+					
+					Set<Point3i> portalBlockCandidates = new TreeSet<>();
+					
+					// At this point we've found a decent block, so now we want to make sure we're working all in the same plane.
+					Set<Face> planarFaces = new HashSet<>();
+					planarFaces.add(f);
+					planarFaces.add(f.getOpposite());
+					planarFaces.add(Face.UP);
+					planarFaces.add(Face.DOWN);
+					
+					try {
+						
+						// Recursively collect all the air blocks in the volume.
+						this.recurse(portalBlockCandidates, possibleAir, getAirSet(), planarFaces, this.maxPortalVolume + 1, this.frameTypes);
+						
+						// ( Plus one so we can be sure if we're over the limit. )
+						
+					} catch (IllegalStateException e) {
+						continue;
+					}
+					
+					if (portalBlockCandidates.size() > this.maxPortalVolume) continue;
+					
+					// Update if we are bigger than the one we have already.
+					if (portalBlockCandidates.size() > portalBlocks.size()) portalBlocks = portalBlockCandidates;
+					
+				}
 				
 			}
-			
-		}
-		
-		// Find an air block that we can recursively collect all air blocks from without going over out limit.
-		Set<Point3i> portalBlocks = new TreeSet<>();
-		for (Point3i airPos : airBlocks) {
-			
-			Set<Point3i> portalBlockCandidates = new TreeSet<>();
-			
-			try {
-				
-				// Recursively collect all the air blocks in the volume.
-				this.recurse(portalBlockCandidates, world.getBlock(airPos), getAirSet(), exploreFaces, this.maxPortalVolume + 1, this.frameTypes);
-				
-				// ( Plus one so we can be sure if we're over the limit. )
-				
-			} catch (IllegalStateException e) {
-				continue;
-			}
-			
-			if (portalBlockCandidates.size() > this.maxPortalVolume) continue;
-			
-			// Update if we are bigger than the one we have already.
-			if (portalBlockCandidates.size() > portalBlocks.size()) portalBlocks = portalBlockCandidates;
 			
 		}
 		
