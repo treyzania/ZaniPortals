@@ -84,7 +84,6 @@ public class BukkitPortalEventAdapter implements Listener {
 			case LEFT_CLICK_AIR:
 			default: {
 				
-				event.setCancelled(false);
 				break; // Nothing to do here.
 				
 			}
@@ -104,7 +103,7 @@ public class BukkitPortalEventAdapter implements Listener {
 		PortalPlayer player = new BukkitPortalPlayer(event.getPlayer());
 		PortalBlock block = new BukkitBlock(event.getBlock());
 		
-		event.setCancelled(this.acceptor.onPlayerBreakBlock(player, block));
+		if (this.acceptor.onPlayerBreakBlock(player, block)) event.setCancelled(true);
 		
 	}
 	
@@ -113,27 +112,23 @@ public class BukkitPortalEventAdapter implements Listener {
 		
 		// Very simple, just wrap the player and pass the event.
 		PortalPlayer pp = new BukkitPortalPlayer(event.getPlayer());
-		event.setCancelled(this.acceptor.onMove(pp));
+		if (this.acceptor.onMove(pp)) event.setCancelled(true);
 		
 	}
 	
 	@EventHandler
 	public void onBlockExplode(BlockExplodeEvent event) {
-		this.acceptor.onNaturalDestroy(new BukkitBlock(event.getBlock()));
+		if (this.acceptor.onNaturalDestroy(new BukkitBlock(event.getBlock()))) event.setCancelled(true);
 	}
 	
 	@EventHandler
 	public void onBlockSpread(BlockSpreadEvent event) {
 		
-		boolean cancel = false;
-		
 		PortalBlock block = new BukkitBlock(event.getBlock());
 		PortalBlock source = new BukkitBlock(event.getSource());
 		
 		// Won't always destroy it.  Better safe than sorry.
-		cancel |= this.acceptor.onFlow(source, block);
-		
-		event.setCancelled(cancel);
+		if (this.acceptor.onFlow(source, block)) event.setCancelled(true);
 		
 	}
 	
@@ -143,13 +138,13 @@ public class BukkitPortalEventAdapter implements Listener {
 		PortalBlock from = new BukkitBlock(event.getBlock());
 		PortalBlock to = new BukkitBlock(event.getToBlock());
 		
-		event.setCancelled(this.acceptor.onFlow(to, from));
+		if (this.acceptor.onFlow(to, from)) event.setCancelled(true);
 		
 	}
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent event) {
-		event.setCancelled(this.acceptor.onPlayerPlaceBlock(new BukkitPortalPlayer(event.getPlayer()), new BukkitBlock(event.getBlock())));
+		if (this.acceptor.onPlayerPlaceBlock(new BukkitPortalPlayer(event.getPlayer()), new BukkitBlock(event.getBlock()))) event.setCancelled(true);
 	}
 	
 }
