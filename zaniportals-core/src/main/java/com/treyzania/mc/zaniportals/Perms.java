@@ -23,5 +23,6 @@ public class Perms {
 	public static final String SET_PORTAL_ACCESS = "zaniportalas.cmd.setportalaccess";
 	public static final String SET_PORTAL_ACCESS_ANY = "zaniportalas.cmd.setportalaccess.any";
 	public static final String RELOAD_PORTALS = "zaniportals.cmd.reloadportals";
+	public static final String LIST_SECRET_PORTALS = "zaniportals.cmd.list.secret";
 	
 }

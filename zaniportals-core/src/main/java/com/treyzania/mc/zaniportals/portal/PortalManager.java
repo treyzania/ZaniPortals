@@ -21,7 +21,7 @@ import com.treyzania.mc.zaniportals.adapters.PortalLocation;
 import com.treyzania.mc.zaniportals.adapters.PortalSign;
 import com.treyzania.mc.zaniportals.adapters.PortalWorld;
 
-public class PortalManager {
+public class PortalManager implements Iterable<Portal> {
 
 	private Set<Portal> portals;
 	
@@ -176,6 +176,11 @@ public class PortalManager {
 			System.out.println("Something went wrong loading data! (" + e.getMessage() + ")");
 		}
 		
+	}
+
+	@Override
+	public Iterator<Portal> iterator() {
+		return this.portals.iterator();
 	}
 	
 }

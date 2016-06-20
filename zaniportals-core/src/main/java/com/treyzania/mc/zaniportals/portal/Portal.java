@@ -32,6 +32,7 @@ public class Portal {
 	
 	public boolean isPublicLink = false;
 	public boolean hideOwner = false;
+	public boolean isSecret = false;
 	
 	public Portal(PortalWorld world, UUID owner, String name, Point3i[] frame, Point3i[] portal) {
 		
