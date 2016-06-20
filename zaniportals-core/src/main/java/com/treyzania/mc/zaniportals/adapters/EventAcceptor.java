@@ -17,15 +17,15 @@ public class EventAcceptor {
 		
 	}
 	
-	public void onSignRightClick(PortalPlayer player, PortalSign sign, PortalItem hand, int slot) {
+	public boolean onSignRightClick(PortalPlayer player, PortalSign sign, PortalItem hand, int slot) {
 		
-		if (!sign.isPortaly()) return;
+		if (!sign.isPortaly()) return false;
 		Portal portal = sign.getPortal();
 		
 		if (hand != null) {
 			
 			PortalPearlType type = hand.getPearlType();
-			if (type == null) return;
+			if (type == null) return false;
 			
 			switch (type) {
 				
@@ -66,7 +66,9 @@ public class EventAcceptor {
 			
 		} else {
 			PortalHelper.interactWithPortal(player, portal, hand, slot);
-		} 
+		}
+		
+		return true;
 		
 	}
 	

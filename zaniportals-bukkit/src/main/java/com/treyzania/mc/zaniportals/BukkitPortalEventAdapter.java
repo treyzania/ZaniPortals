@@ -63,12 +63,10 @@ public class BukkitPortalEventAdapter implements Listener {
 				if (mat == Material.WALL_SIGN) {
 					
 					// Finally, we can just pass everything through here.
-					this.acceptor.onSignRightClick(pp, pb.getSignData(), heldItem, p.getInventory().getHeldItemSlot());
-					
+					if (this.acceptor.onSignRightClick(pp, pb.getSignData(), heldItem, p.getInventory().getHeldItemSlot())) event.setCancelled(true);
 					
 				}
 				
-				event.setCancelled(true);
 				break;
 				
 			}
