@@ -19,3 +19,7 @@ commands:
         aliases: [pacc]
         description: Sets who can get a link item from a portal.
         usage: /setportalaccess <portal name> <self|all>
+    reloadportals:
+        aliases: []
+        description: Reloads the portals from file.
+        usage: /reloadportals
