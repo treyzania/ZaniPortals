@@ -31,6 +31,7 @@ public class Portal {
 	protected Point3i[] portalBlocks;
 	
 	public boolean isPublicLink = false;
+	public boolean hideOwner = false;
 	
 	public Portal(PortalWorld world, UUID owner, String name, Point3i[] frame, Point3i[] portal) {
 		
@@ -104,7 +105,7 @@ public class Portal {
 			
 			// Only do 12 characters so it's not absurd.
 			String username = ZaniPortals.server.getUsername(this.owner);
-			sign.setLine(2, ChatColor.DARK_GRAY + username.substring(0, Math.min(12, username.length())));
+			sign.setLine(2, !this.hideOwner ? ChatColor.DARK_GRAY + username.substring(0, Math.min(12, username.length())) : "");
 			
 			// If we have a real target, put that in there in italics.  If not, leave it blank.
 			sign.setLine(3, (this.target != null && !(this.target instanceof NotifyInvalidPortalTarget)) ? ChatColor.ITALIC + target.getName() : "");
