@@ -1,5 +1,6 @@
 package com.treyzania.mc.zaniportals.portal;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -24,6 +25,16 @@ public class PortalHelper {
 	public static boolean isValidNewSignSyntax(PortalSign sign) {
 		
 		if (!ChatColor.stripColor(sign.getLine(0)).equals("[Portal]")) return false;
+		return true;
+		
+	}
+	
+	public static boolean isValidPortalName(String name) {
+		
+		for (String s : Arrays.asList(" ", ",", "+", "=", ";", "\"", "'", "\\", "/", "`", "~", "?")) {
+			if (name.contains(s)) return false;
+		}
+		
 		return true;
 		
 	}
@@ -112,6 +123,13 @@ public class PortalHelper {
 			
 			player.sendMessage("A portal with that name already exists!");
 			return null; // Cancel sign update.
+			
+		}
+		
+		if (!PortalHelper.isValidPortalName(name)) {
+			
+			player.sendMessage("Invalid portal name!");
+			return null;
 			
 		}
 		
