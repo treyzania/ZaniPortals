@@ -14,9 +14,9 @@
 	
 	<modules>
 		
-		<module>zaniportals-core</module>
-		<module>zaniportals-bukkit</module>
-		<module>zaniportals-sponge</module>
+		<module>common</module>
+		<module>plat-bukkit</module>
+		<module>plat-sponge</module>
 		
 	</modules>
 	
