@@ -16,6 +16,7 @@
 		
 		<module>zaniportals-core</module>
 		<module>zaniportals-bukkit</module>
+		<module>zaniportals-sponge</module>
 		
 	</modules>
 	
@@ -24,6 +25,11 @@
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+		</repository>
+
+		<repository>
+			<id>sponge-repo</id>
+			<url>https://repo.spongepowered.org/maven</url>
 		</repository>
 		
 	</repositories>

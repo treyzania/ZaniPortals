@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>zaniportals-bukkit</artifactId>
+	<artifactId>zaniportals-sponge</artifactId>
 	
 	<parent>
 		<groupId>com.treyzania</groupId>
@@ -24,9 +24,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot-api</artifactId>
-			<version>1.9.4-R0.1-SNAPSHOT</version>
+			<groupId>org.spongepowered</groupId>
+			<artifactId>spongeapi</artifactId>
+			<version>6.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		
