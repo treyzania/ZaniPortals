@@ -6,14 +6,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import com.treyzania.mc.zaniportals.adapters.PortalConfig;
 
-public class ZaniPortalsConfig implements PortalConfig {
+public class ZaniPortalsBukkitConfig implements PortalConfig {
 	
 	public List<Integer> signPlaceBlockIds;
 	public List<Integer> portalStructureBlockIds;
 	public int portalBlockId;
 	public int maxPortalBlocks;
 	
-	protected ZaniPortalsConfig(FileConfiguration fc) {
+	protected ZaniPortalsBukkitConfig(FileConfiguration fc) {
 		
 		this.signPlaceBlockIds = fc.getIntegerList("PortalStructure.SignPlaceOnBlocks");
 		this.portalStructureBlockIds = fc.getIntegerList("PortalStructure.PortalFrameBlocks");

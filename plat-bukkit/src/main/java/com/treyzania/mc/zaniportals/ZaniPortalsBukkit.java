@@ -20,7 +20,7 @@ public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 
 	public static ZaniPortalsBukkit INSTANCE;
 	
-	public ZaniPortalsConfig conf;
+	public ZaniPortalsBukkitConfig conf;
 	
 	@Override
 	public void onEnable() {
@@ -65,7 +65,7 @@ public class ZaniPortalsBukkit extends JavaPlugin implements PortalPlugin {
 	private void loadConfig() {
 		
 		this.saveDefaultConfig();
-		this.conf = new ZaniPortalsConfig(this.getConfig());
+		this.conf = new ZaniPortalsBukkitConfig(this.getConfig());
 		ZaniPortals.config = this.conf;
 		
 	}

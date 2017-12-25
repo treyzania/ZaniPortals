@@ -5,6 +5,7 @@ import org.spongepowered.api.world.BlockChangeFlag;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
+import com.treyzania.mc.zaniportals.IDMap;
 import com.treyzania.mc.zaniportals.ZaniPortals;
 import com.treyzania.mc.zaniportals.world.Face;
 
@@ -17,7 +18,7 @@ public class SpongeBlock implements PortalBlock {
 	
 	public SpongeBlock(Location<World> loc) {
 		this.loc = loc;
-		this.id = IDMap.getIdByType(this.loc.getBlockType());
+		this.id = IDMap.getIdByBlockType(this.loc.getBlockType());
 	}
 	
 	@Override
@@ -43,7 +44,7 @@ public class SpongeBlock implements PortalBlock {
 	@Override
 	public void setId_noUpdate(int id) {
 		this.id = id;
-		this.loc.setBlockType(IDMap.getTypeById(id), BlockChangeFlag.NONE, Cause.source(ZaniPortals.plugin).build());
+		this.loc.setBlockType(IDMap.getBlockTypeById(id), BlockChangeFlag.NONE, Cause.source(ZaniPortals.plugin).build());
 	}
 
 	@Override
