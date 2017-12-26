@@ -4,6 +4,8 @@ import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
+import com.treyzania.mc.zaniportals.SpongePerms;
+
 public class SpongeCommandSender implements PortalCommandSender {
 
 	private CommandSource source;
@@ -14,7 +16,7 @@ public class SpongeCommandSender implements PortalCommandSender {
 	
 	@Override
 	public boolean isOp() {
-		return this.source.hasPermission("zaniportals.fakeop");
+		return this.source.hasPermission(SpongePerms.SPONGE_ZP_FAKEOP);
 	}
 
 	@Override
@@ -35,7 +37,6 @@ public class SpongeCommandSender implements PortalCommandSender {
 
 	@Override
 	public Object getWrappedObject() {
-		// TODO Auto-generated method stub
 		return this.source;
 	}
 
