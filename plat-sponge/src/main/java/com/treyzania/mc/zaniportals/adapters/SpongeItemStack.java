@@ -12,7 +12,7 @@ import com.treyzania.mc.zaniportals.IDMap;
 
 public class SpongeItemStack implements PortalItem {
 
-	private ItemStack stack;
+	protected ItemStack stack;
 	
 	public SpongeItemStack(ItemStack is) {
 		this.stack = is;
@@ -94,8 +94,7 @@ public class SpongeItemStack implements PortalItem {
 
 	@Override
 	public PortalLinkItem convertToLinkItem() {
-		// TODO Auto-generated method stub
-		return null;
+		return new SpongeLinkItem(this.stack);
 	}
 
 }
