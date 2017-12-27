@@ -5,14 +5,20 @@ import java.util.UUID;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.inventory.entity.PlayerInventory;
 import org.spongepowered.api.text.serializer.TextSerializers;
-import org.spongepowered.api.world.Location;
-import org.spongepowered.api.world.World;
-
 import com.flowpowered.math.vector.Vector3d;
 
-public class SpongePlayer implements PortalPlayer {
+public class SpongePlayer extends SpongeEntity implements PortalPlayer {
 
 	private Player player;
+	
+	public SpongePlayer(Player p) {
+		
+		super(p);
+		
+		// Ah, I'm lazy so we store another reference.
+		this.player = p;
+		
+	}
 	
 	@Override
 	public boolean isOp() {
@@ -32,17 +38,6 @@ public class SpongePlayer implements PortalPlayer {
 	@Override
 	public String getName() {
 		return this.player.getName();
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public void setLocation(PortalLocation loc) {
-		this.player.setLocation((Location<World>) loc.getWrappedObject()); // Not great, but it works.
-	}
-
-	@Override
-	public PortalLocation getLocation() {
-		return new SpongeLocation(this.player.getLocation());
 	}
 
 	@Override
