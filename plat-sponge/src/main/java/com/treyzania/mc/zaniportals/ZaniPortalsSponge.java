@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.GameRegistry;
+import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
@@ -12,6 +14,13 @@ import org.spongepowered.api.plugin.Plugin;
 
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
+import com.treyzania.mc.zaniportals.adapters.SpongeCommandAdapter;
+import com.treyzania.mc.zaniportals.cmd.AbstractPortalCommand;
+import com.treyzania.mc.zaniportals.cmd.CommandGivePortalActivator;
+import com.treyzania.mc.zaniportals.cmd.CommandListPortals;
+import com.treyzania.mc.zaniportals.cmd.CommandPlayerLink;
+import com.treyzania.mc.zaniportals.cmd.CommandReloadPortals;
+import com.treyzania.mc.zaniportals.cmd.CommandSetPortalPublic;
 
 import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
@@ -24,6 +33,9 @@ public class ZaniPortalsSponge {
 
 	@Inject
 	private GameRegistry gameRegistry;
+
+	@Inject
+	private CommandManager cmdManager;
 	
 	@Inject
 	private Logger logger;
@@ -62,9 +74,17 @@ public class ZaniPortalsSponge {
 		
 		this.logger.info("ZaniPortals initializing...");
 		
+		// First we just register the commands for the plugin.
+		this.registerCommand(new CommandListPortals("listportals"));
+		this.registerCommand(new CommandGivePortalActivator("giveactivator"));
+		this.registerCommand(new CommandPlayerLink("giveplayerlinkpearl"));
+		this.registerCommand(new CommandSetPortalPublic("setportalaccess"));
+		this.registerCommand(new CommandReloadPortals("reloadportals"));
 		
-		
-		
+	}
+	
+	private void registerCommand(AbstractPortalCommand cmd) {
+		this.cmdManager.register(this, new SpongeCommandAdapter(cmd), cmd.getName());
 	}
 	
 }
