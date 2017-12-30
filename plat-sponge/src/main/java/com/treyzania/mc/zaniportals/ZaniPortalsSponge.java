@@ -15,6 +15,7 @@ import org.spongepowered.api.plugin.Plugin;
 import com.google.common.reflect.TypeToken;
 import com.google.inject.Inject;
 import com.treyzania.mc.zaniportals.adapters.SpongeCommandAdapter;
+import com.treyzania.mc.zaniportals.adapters.SpongeServerProvider;
 import com.treyzania.mc.zaniportals.cmd.AbstractPortalCommand;
 import com.treyzania.mc.zaniportals.cmd.CommandGivePortalActivator;
 import com.treyzania.mc.zaniportals.cmd.CommandListPortals;
@@ -73,6 +74,9 @@ public class ZaniPortalsSponge {
 	public void onInitialization(GameInitializationEvent event) {
 		
 		this.logger.info("ZaniPortals initializing...");
+		
+		// Plug in a few event handlers and wrappers... (TODO more)
+		ZaniPortals.server = new SpongeServerProvider();
 		
 		// First we just register the commands for the plugin.
 		this.registerCommand(new CommandListPortals("listportals"));
