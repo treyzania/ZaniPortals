@@ -2,8 +2,10 @@ package com.treyzania.mc.zaniportals.adapters;
 
 import java.util.UUID;
 
+import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.player.Player;
+import org.spongepowered.api.text.serializer.TextSerializers;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
@@ -16,7 +18,7 @@ public class SpongeEntity implements PortalEntity {
 	public SpongeEntity(Entity ent) {
 		this.entity = ent;
 	}
-
+	
 	@Override
 	public UUID getUniqueId() {
 		return this.entity.getUniqueId();
@@ -24,13 +26,13 @@ public class SpongeEntity implements PortalEntity {
 
 	@Override
 	public String getName() {
-		return this.entity.getType().getName(); // ehh?
+		return this.entity.get(Keys.DISPLAY_NAME).map(t -> TextSerializers.FORMATTING_CODE.serialize(t)).orElse(this.entity.getType().getName());
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void setLocation(PortalLocation loc) {
-		this.entity.setLocation((Location<World>) loc.getWrappedObject()); // Not great, but it works.
+		this.entity.setLocation((Location<World>) loc.getWrappedObject());
 	}
 
 	@Override
