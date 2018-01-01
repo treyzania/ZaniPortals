@@ -3,11 +3,20 @@ package com.treyzania.mc.zaniportals.adapters;
 import java.util.UUID;
 
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.text.serializer.TextSerializers;
+
+import com.treyzania.mc.zaniportals.IDMap;
 
 public class SpongeServerProvider implements ServerProvider {
 
 	// TODO This needs more encapsulation of things.
+	
+	private Object causeRoot;
+	
+	public SpongeServerProvider(Object causeRoot) {
+		this.causeRoot = causeRoot;
+	}
 	
 	@Override
 	public void broadcast(String message) {
@@ -16,20 +25,25 @@ public class SpongeServerProvider implements ServerProvider {
 
 	@Override
 	public void broadcast(String message, String permission) {
-		// TODO Auto-generated method stub
-
+		Sponge.getServer().getOnlinePlayers()
+			.stream()
+			.filter(p -> p.hasPermission(permission))
+			.forEach(p -> p.sendMessage(TextSerializers.FORMATTING_CODE.deserialize(message)));
 	}
 
 	@Override
 	public void scheduleAsync(Runnable r, long tickDelay) {
-		// TODO Auto-generated method stub
-
+		Sponge.getScheduler().createTaskBuilder()
+			.async()
+			.delayTicks(tickDelay)
+			.execute(r);
 	}
 
 	@Override
 	public void scheduleSync(Runnable r, long tickDelay) {
-		// TODO Auto-generated method stub
-
+		Sponge.getScheduler().createTaskBuilder()
+			.delayTicks(tickDelay)
+			.execute(r);
 	}
 
 	@Override
@@ -39,7 +53,7 @@ public class SpongeServerProvider implements ServerProvider {
 
 	@Override
 	public PortalItem getItem(int id) {
-		return null;
+		return new SpongeItemStack(ItemStack.builder().itemType(IDMap.getItemTypeById(id)).build());
 	}
 
 	@Override
