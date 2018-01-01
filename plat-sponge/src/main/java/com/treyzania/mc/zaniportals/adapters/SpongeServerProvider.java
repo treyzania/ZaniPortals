@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.serializer.TextSerializers;
 
 import com.treyzania.mc.zaniportals.IDMap;
@@ -20,15 +21,25 @@ public class SpongeServerProvider implements ServerProvider {
 	
 	@Override
 	public void broadcast(String message) {
-		Sponge.getServer().getBroadcastChannel().send(TextSerializers.FORMATTING_CODE.deserialize(message));
+		Sponge.getServer().getBroadcastChannel().send(this.causeRoot, TextSerializers.FORMATTING_CODE.deserialize(message));
 	}
 
 	@Override
 	public void broadcast(String message, String permission) {
+		
+		Text text = TextSerializers.FORMATTING_CODE.deserialize(message);
+		
+		// Send it to the players.
 		Sponge.getServer().getOnlinePlayers()
 			.stream()
 			.filter(p -> p.hasPermission(permission))
-			.forEach(p -> p.sendMessage(TextSerializers.FORMATTING_CODE.deserialize(message)));
+			.forEach(p -> p.sendMessage(text));
+		
+		// And the console.
+		Sponge.getServer().getConsole().sendMessage(text);
+		
+		// FIXME The message doesn't include the plugin as a sender, so we should fix that.
+		
 	}
 
 	@Override
@@ -36,14 +47,16 @@ public class SpongeServerProvider implements ServerProvider {
 		Sponge.getScheduler().createTaskBuilder()
 			.async()
 			.delayTicks(tickDelay)
-			.execute(r);
+			.execute(r)
+			.submit(this.causeRoot);
 	}
 
 	@Override
 	public void scheduleSync(Runnable r, long tickDelay) {
 		Sponge.getScheduler().createTaskBuilder()
 			.delayTicks(tickDelay)
-			.execute(r);
+			.execute(r)
+			.submit(this.causeRoot);
 	}
 
 	@Override
