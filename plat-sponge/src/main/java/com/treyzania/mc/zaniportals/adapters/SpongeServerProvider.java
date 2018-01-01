@@ -61,7 +61,7 @@ public class SpongeServerProvider implements ServerProvider {
 
 	@Override
 	public PortalWorld getWorld(String name) {
-		return new SpongeWorld(Sponge.getServer().getWorld(name).get()); // FIXME this should return null, instead
+		return Sponge.getServer().getWorld(name).map(w -> new SpongeWorld(w)).orElse(null);
 	}
 
 	@Override
@@ -71,12 +71,12 @@ public class SpongeServerProvider implements ServerProvider {
 
 	@Override
 	public PortalPlayer getPlayer(UUID uuid) {
-		return new SpongePlayer(Sponge.getServer().getPlayer(uuid).get());
+		return Sponge.getServer().getPlayer(uuid).map(p -> new SpongePlayer(p)).orElse(null);
 	}
 
 	@Override
 	public PortalPlayer getPlayer(String name) {
-		return new SpongePlayer(Sponge.getServer().getPlayer(name).get());
+		return Sponge.getServer().getPlayer(name).map(p -> new SpongePlayer(p)).orElse(null);
 	}
 
 	@Override
