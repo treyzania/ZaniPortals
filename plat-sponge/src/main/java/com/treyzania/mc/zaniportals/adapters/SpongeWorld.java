@@ -29,8 +29,7 @@ public class SpongeWorld implements PortalWorld {
 
 	@Override
 	public PortalLocation createLocation(double x, double y, double z) {
-		// TODO Auto-generated method stub
-		return null;
+		return new SpongeLocation(this.world.getLocation(x, y, z));
 	}
 
 }
